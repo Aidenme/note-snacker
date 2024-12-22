@@ -1,0 +1,15 @@
+# Ignore any exports that end up in the main folder. Can delete this rule later after I have the whole database folder setup.
+*.html
+
+# Ignore my .env file
+*.env
+
+# Ignore my .env encryption storage
+*.7z
+
+# Ignore the old, bad pre-git versioning
+**/Old
+
+# Ignore any of the old exports. I don't want to violate copyright by letting these html files get to the internet. Once I get the new database system setup I'll just move this into the Old folder, but I think the current system uses this so I don't wanna mess with it for now.
+**/Exports
+
