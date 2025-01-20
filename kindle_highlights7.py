@@ -190,12 +190,28 @@ def exportToFile(highlightBook):
 
     f.close()
 
+#Gets the title, author, and button to press to open the book on the notebook page
+def getLibrary():
+    soup = BeautifulSoup(browser.html, 'lxml')
+    library = soup.find_all("div", {"class": "kp-notebook-library-each-book"})
+
+    libraryList = []
+
+    for book in library:
+        button = browser.find_by_id(book.get('id'))
+        title = book.find('h2').text
+        author = book.find('p').text
+        libraryList.append({'title': title, 'author': author, 'button': button})
+
+    return libraryList
+
 print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
 browser = Browser(BROWSER_NAME)
 browser.visit(KINDLE_NOTEBOOK)
 browser.fill('email', AMZ_ACCOUNT["EMAIL"])
+time.sleep(2)
 button = browser.find_by_id('continue')
 button.click()
 time.sleep(2)
@@ -207,22 +223,16 @@ button.click()
 #Starting off with the right count can cause lots of issues.
 time.sleep(5)
 
-soup = BeautifulSoup(browser.html, 'lxml')
-library = soup.find_all("div", {"class": "kp-notebook-library-each-book"})
 
-libraryList = []
+library = getLibrary()
 
-for book in library:
-    button = browser.find_by_id(book.get('id'))
-    title = book.find('h2').text
-    author = book.find('p').text
-    libraryList.append({'title': title, 'author': author, 'button': button})
-
-print(libraryList[5]['title'])
+print(library[2]['title'])
 #button = browser.find_by_id(libraryList[1]['id'])
-libraryList[2]['button'].click()
+library[2]['button'].click()
 
-"""
+#Letting the page load after a book change if that's the reason the highlight count isn't working.
+time.sleep(5)
+
 startingPageHighlightCount = getPageHighlightCount()
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
 if startingPageHighlightCount == 0:
@@ -282,6 +292,5 @@ while True:
 exportToFile(test_book)
 
 print('done')
-"""
 
 #browser.quit()
