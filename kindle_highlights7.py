@@ -10,6 +10,7 @@ import time
 
 BROWSER_NAME = 'firefox'
 AMZ_ACCOUNT = dotenv_values(".env")
+KINDLE_NOTEBOOK = 'https://read.amazon.com/kp/notebook'
 
 def createInitialHighlightList():
     soup = BeautifulSoup(browser.html, 'lxml')
@@ -193,7 +194,7 @@ print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
 browser = Browser(BROWSER_NAME)
-browser.visit('https://read.amazon.com/kp/notebook')
+browser.visit(KINDLE_NOTEBOOK)
 browser.fill('email', AMZ_ACCOUNT["EMAIL"])
 button = browser.find_by_id('continue')
 button.click()
@@ -219,8 +220,7 @@ for book in library:
 
 print(libraryList[5]['title'])
 #button = browser.find_by_id(libraryList[1]['id'])
-libraryList[5]['button'].click()
-#print(library)
+libraryList[2]['button'].click()
 
 """
 startingPageHighlightCount = getPageHighlightCount()
