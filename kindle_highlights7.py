@@ -1,7 +1,3 @@
-# pip install these packages
-# splinter bs4 lxml
-# tested on python3
-
 from dotenv import dotenv_values
 from splinter import Browser
 from bs4 import BeautifulSoup
@@ -225,7 +221,7 @@ def pickBook():
     time.sleep(5)
     print("Book loaded")
 
-#Handles signing into the online kindle notebook
+#Handles signing into the kindle notebook website
 def signIn():
     BROWSER.visit(KINDLE_NOTEBOOK)
     BROWSER.fill('email', AMZ_ACCOUNT["EMAIL"])
