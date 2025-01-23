@@ -222,9 +222,6 @@ def pickBook():
     time.sleep(5)
     print("Book loaded")
 
-
-
-
 print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
@@ -246,18 +243,6 @@ time.sleep(5)
 pickBook()
 
 sys.exit("Exiting before copying the book")
-
-
-#library = getLibrary()
-
-print(library[2]['title'])
-#button = browser.find_by_id(libraryList[1]['id'])
-library[2]['button'].click()
-
-
-
-#Letting the page load after a book change if that's the reason the highlight count isn't working.
-time.sleep(5)
 
 startingPageHighlightCount = getPageHighlightCount()
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
