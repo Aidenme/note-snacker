@@ -5,6 +5,7 @@
 from dotenv import dotenv_values
 from splinter import Browser
 from bs4 import BeautifulSoup
+import sys
 import json
 import time
 
@@ -229,6 +230,8 @@ library = getLibrary()
 print(library[2]['title'])
 #button = browser.find_by_id(libraryList[1]['id'])
 library[2]['button'].click()
+
+sys.exit("Exiting before copying the book")
 
 #Letting the page load after a book change if that's the reason the highlight count isn't working.
 time.sleep(5)
