@@ -12,9 +12,10 @@ import time
 BROWSER_NAME = 'firefox'
 AMZ_ACCOUNT = dotenv_values(".env")
 KINDLE_NOTEBOOK = 'https://read.amazon.com/kp/notebook'
+BROWSER = Browser(BROWSER_NAME)
 
 def createInitialHighlightList():
-    soup = BeautifulSoup(browser.html, 'lxml')
+    soup = BeautifulSoup(BROWSER.html, 'lxml')
     divs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
     print('Divs found on initial list creation:')
     print(len(divs))
@@ -99,18 +100,18 @@ def deleteHighlight(testHighlight):
     time.sleep(2)
     cleanId = testHighlight['id'][len('highlight-'):]
     newId = 'popover-' + cleanId
-    optionsButton = browser.find_by_id(newId)
+    optionsButton = BROWSER.find_by_id(newId)
     optionsButton.click()
     time.sleep(2)
-    deleteButton = browser.find_by_id('deletehighlight')
+    deleteButton = BROWSER.find_by_id('deletehighlight')
     deleteButton.click()
     time.sleep(2)
-    deleteConfirm = browser.find_by_xpath('//html/body/div[4]/div/div/div[2]/span[2]/span/span/input')
+    deleteConfirm = BROWSER.find_by_xpath('//html/body/div[4]/div/div/div[2]/span[2]/span/span/input')
     deleteConfirm.click()
 
 def getHighlightFromId(highlightId):
     newHighlight = {}
-    soup = BeautifulSoup(browser.html, 'lxml')
+    soup = BeautifulSoup(BROWSER.html, 'lxml')
     highlightDiv = soup.find('div', {'id': highlightId})
 
     if highlightDiv.find('div', {'class': 'a-alert-content'}):
@@ -151,7 +152,7 @@ def fillAllHighlights(highlightBook):
     return highlightBook
 
 def getPageHighlightCount():
-    soup = BeautifulSoup(browser.html, 'lxml')
+    soup = BeautifulSoup(BROWSER.html, 'lxml')
     highlightDivs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
     highlightCount = len(highlightDivs) - 1 #subtract one because the first div is not a highlight
     print("getPageHighlightCount Result:")
@@ -193,13 +194,13 @@ def exportToFile(highlightBook):
 
 #Gets the title, author, and button to press to open the book on the notebook page
 def getLibrary():
-    soup = BeautifulSoup(browser.html, 'lxml')
+    soup = BeautifulSoup(BROWSER.html, 'lxml')
     library = soup.find_all("div", {"class": "kp-notebook-library-each-book"})
 
     libraryList = []
 
     for book in library:
-        button = browser.find_by_id(book.get('id'))
+        button = BROWSER.find_by_id(book.get('id'))
         title = book.find('h2').text
         author = book.find('p').text
         libraryList.append({'title': title, 'author': author, 'button': button})
@@ -225,15 +226,15 @@ def pickBook():
 print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
-browser = Browser(BROWSER_NAME)
-browser.visit(KINDLE_NOTEBOOK)
-browser.fill('email', AMZ_ACCOUNT["EMAIL"])
+
+BROWSER.visit(KINDLE_NOTEBOOK)
+BROWSER.fill('email', AMZ_ACCOUNT["EMAIL"])
 time.sleep(2)
-button = browser.find_by_id('continue')
+button = BROWSER.find_by_id('continue')
 button.click()
 time.sleep(2)
-browser.fill('password', AMZ_ACCOUNT["PASSWORD"])
-button = browser.find_by_id('signInSubmit')
+BROWSER.fill('password', AMZ_ACCOUNT["PASSWORD"])
+button = BROWSER.find_by_id('signInSubmit')
 button.click()
 
 #Wait for the page to load. It can take a while on pages with tons of highlights and not
@@ -271,7 +272,7 @@ while True:
     #Putting tries on everything that attempts to read data from the browser in case the internet goes down or the window gets closed.
     try:
         #fillAllHighlights() causes some highlights to be deleted so the page needs to be reloaded to unlock more highlights to copy.
-        browser.reload()
+        BROWSER.reload()
         print("Refreshing...")
         time.sleep(5)
         print("Refresh complete!")
@@ -304,4 +305,4 @@ exportToFile(test_book)
 
 print('done')
 
-#browser.quit()
+#BROWSER.quit()
