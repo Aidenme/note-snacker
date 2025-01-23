@@ -208,10 +208,21 @@ def getLibrary():
 
 #Lets you pick a book out of all books
 def pickBook():
+
     library = getLibrary()
 
-    for book in library:
-        print(book['title'])
+    for index, book in enumerate(library):
+        print(str(index +1) + "\n" + book['title'] + "\n")
+
+    bookLibraryIndex = int(input("Enter index number of the book to extract notes from:")) - 1
+
+    print(library[bookLibraryIndex]['title'])
+    print("Loading Book...")
+    library[bookLibraryIndex]['button'].click()
+    time.sleep(5)
+    print("Book loaded")
+
+
 
 
 print()
