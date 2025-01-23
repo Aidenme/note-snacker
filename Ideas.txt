@@ -1,0 +1,2 @@
+FUNCTIONALITY TO SKIP FINISHED BOOKS
+It will take a long time to click through every book and wait for it to load. This will waste some time on books I've finished reading and highlighting. To fix this there should be some way to indicate a book is finished. I was thinking there should be some local book list, but the HTML files of all the books for the program to refer to is going to require taking a crack at more in-depth local storage. This is just a feature to keep in mind when I reach that stage of the project.

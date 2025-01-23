@@ -206,6 +206,14 @@ def getLibrary():
 
     return libraryList
 
+#Lets you pick a book out of all books
+def pickBook():
+    library = getLibrary()
+
+    for book in library:
+        print(book['title'])
+
+
 print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
@@ -224,14 +232,18 @@ button.click()
 #Starting off with the right count can cause lots of issues.
 time.sleep(5)
 
+pickBook()
 
-library = getLibrary()
+sys.exit("Exiting before copying the book")
+
+
+#library = getLibrary()
 
 print(library[2]['title'])
 #button = browser.find_by_id(libraryList[1]['id'])
 library[2]['button'].click()
 
-sys.exit("Exiting before copying the book")
+
 
 #Letting the page load after a book change if that's the reason the highlight count isn't working.
 time.sleep(5)
