@@ -220,26 +220,30 @@ def pickBook():
     print(library[bookLibraryIndex]['title'])
     print("Loading Book...")
     library[bookLibraryIndex]['button'].click()
+    #Wait for the page to load. It can take a while on pages with tons of highlights and not
+    #Starting off with the right count can cause lots of issues.
     time.sleep(5)
     print("Book loaded")
+
+#Handles signing into the online kindle notebook
+def signIn():
+    BROWSER.visit(KINDLE_NOTEBOOK)
+    BROWSER.fill('email', AMZ_ACCOUNT["EMAIL"])
+    time.sleep(2)
+    button = BROWSER.find_by_id('continue')
+    button.click()
+    time.sleep(2)
+    BROWSER.fill('password', AMZ_ACCOUNT["PASSWORD"])
+    button = BROWSER.find_by_id('signInSubmit')
+    button.click()
+    time.sleep(2)
+
 
 print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
 
-BROWSER.visit(KINDLE_NOTEBOOK)
-BROWSER.fill('email', AMZ_ACCOUNT["EMAIL"])
-time.sleep(2)
-button = BROWSER.find_by_id('continue')
-button.click()
-time.sleep(2)
-BROWSER.fill('password', AMZ_ACCOUNT["PASSWORD"])
-button = BROWSER.find_by_id('signInSubmit')
-button.click()
-
-#Wait for the page to load. It can take a while on pages with tons of highlights and not
-#Starting off with the right count can cause lots of issues.
-time.sleep(5)
+signIn()
 
 pickBook()
 
