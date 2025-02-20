@@ -1,2 +1,18 @@
+Each book has its own folder.
+
+Highlights of each book get downloaded as html to each folder
+
+Running the program compares hightlights to highlights it gets from each local book's html file.
+	-Only runs if the online book has highlights
+	-FUNCTION - Grab local highlights. Returns a local highlight dict
+	-FUNCTION - Compare local highlights
+	-The delete highlights function might work better if you send it a highlight dict and list of indexes of highlights to delete
+	-Comparing each online highlight to each local highlight might take a really long time. This will especially be true the first time this runs. Don't worry about it for now. If stuff breaks then change it. Usually you will only be comparing a few highlights to the local book highlights.
+
+New highlights
+	-Any new highlights found are put into the main folder and have the book name so I can easily append them into SuperMemo's books.
+	-New highlight data is added to the end of the html file in its book folder. Actually maybe I don't need individaul folder. I can just have the full HTML files in export and add _New_ files to the top of this folder.
+
+
 FUNCTIONALITY TO SKIP FINISHED BOOKS
 It will take a long time to click through every book and wait for it to load. This will waste some time on books I've finished reading and highlighting. To fix this there should be some way to indicate a book is finished. I was thinking there should be some local book list, but the HTML files of all the books for the program to refer to is going to require taking a crack at more in-depth local storage. This is just a feature to keep in mind when I reach that stage of the project.
