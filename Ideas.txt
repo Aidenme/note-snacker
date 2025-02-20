@@ -1,6 +1,6 @@
 Each book has its own folder.
 
-Highlights of each book get downloaded as html to each folder
+Highlights of each book get downloaded as html files in the "Exports" folder.
 
 Running the program compares hightlights to highlights it gets from each local book's html file.
 	-Only runs if the online book has highlights
