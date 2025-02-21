@@ -1,4 +1,4 @@
-Each book has its own folder.
+This might be the first time it actually makes sense to finally create a Book object. When I was just working with one book it was fine because I was just moving in one direction: Functually grab all the highlighted text, output as an html file. Done. Now there a two places I need to get data from. I'm not just going in one direction so it will be helpful to have everything going into one specific place. Also I'm going to be working with multiple books now. That alone is a good hint it is time to make this OOP. This also might be a great time to learn this because I already have most of the functions written. The solution to the problems I'm having might actually be more of a structural problem than anything. The reason it has been so hard to determine what functions I should write exactly is that functions aren't the problem. If you feel like your wheels are spinning and you're not getting anywhere that is because you are stuck and you need to change the strategy.
 
 Highlights of each book get downloaded as html files in the "Exports" folder.
 
