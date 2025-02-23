@@ -243,8 +243,6 @@ signIn()
 
 pickBook()
 
-sys.exit("Exiting before copying the book")
-
 startingPageHighlightCount = getPageHighlightCount()
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
 if startingPageHighlightCount == 0:
@@ -253,6 +251,8 @@ if startingPageHighlightCount == 0:
 
 test_book = {}
 test_book['highlights'] = createInitialHighlightList()
+exportToFile(test_book)
+sys.exit("Initial highlights copied, exiting...")
 
 #Does a handful of checks to make sure the highlight colors are correct in the book to avoid disasters.
 checkColors(test_book['highlights'])
