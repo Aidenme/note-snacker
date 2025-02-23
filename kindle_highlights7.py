@@ -149,7 +149,11 @@ def fillAllHighlights(highlightBook):
 
     return highlightBook
 
-def getPageHighlightCount():
+def setSoup(book):
+    book.soup = BeautifulSoup(BROWSER.html, 'lxml')
+
+def getPageHighlightCount(book):
+    setSoup(book)
     soup = BeautifulSoup(BROWSER.html, 'lxml')
     highlightDivs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
     highlightCount = len(highlightDivs) - 1 #subtract one because the first div is not a highlight
@@ -201,7 +205,8 @@ def getLibrary():
         button = BROWSER.find_by_id(book.get('id'))
         title = book.find('h2').text
         author = book.find('p').text
-        libraryList.append({'title': title, 'author': author, 'button': button})
+
+        libraryList.append(Book(title, author, button))
 
     return libraryList
 
@@ -243,7 +248,11 @@ print("Now loading your selected browser, " + BROWSER_NAME + "...")
 
 signIn()
 
-#pickBook()
+library = getLibrary()
+
+library[1].getPageHighlightCount()
+
+exit()
 
 startingPageHighlightCount = getPageHighlightCount()
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
