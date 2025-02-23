@@ -1,0 +1,17 @@
+class Book
+init self, link
+	self.link = link
+	self.title = self.getTitle(link)
+	self.HTMLFile = self.getHTMLFile()
+	self.highlights = []
+
+Book should only exist if there is a link. Basically "if link found" book should be and local html file should be. 
+
+Then have a list of books.
+
+get all books
+
+Book(link)
+
+Can't get highlight count on init because you can't get the highlight count without opening the actual link. init should not do that because it will take a long time to just do that basic stuff.
+
