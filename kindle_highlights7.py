@@ -9,6 +9,7 @@ BROWSER_NAME = 'firefox'
 AMZ_ACCOUNT = dotenv_values(".env")
 KINDLE_NOTEBOOK = 'https://read.amazon.com/kp/notebook'
 BROWSER = Browser(BROWSER_NAME)
+BOOK_STORAGE_FOLDER = 'Book Storage/'
 
 def createInitialHighlightList():
     soup = BeautifulSoup(BROWSER.html, 'lxml')
@@ -157,7 +158,7 @@ def getPageHighlightCount():
 
 def exportToFile(highlightBook):
     mergeHighlights = False
-    f = open("test.html", mode='w', encoding='utf-8', errors='replace')
+    f = open(BOOK_STORAGE_FOLDER + "test.html", mode='w', encoding='utf-8', errors='replace')
 
     for highlight in test_book['highlights']:
 
