@@ -1,6 +1,7 @@
 from dotenv import dotenv_values
 from splinter import Browser
 from bs4 import BeautifulSoup
+from book import Book
 import sys
 import json
 import time
@@ -242,7 +243,7 @@ print("Now loading your selected browser, " + BROWSER_NAME + "...")
 
 signIn()
 
-pickBook()
+#pickBook()
 
 startingPageHighlightCount = getPageHighlightCount()
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
