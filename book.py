@@ -8,12 +8,14 @@ class Book:
         self.button = button
         self.browser = browser
         self.soup = None
+        self.selected = False
 
     def __str__(self):
         return self.title
     
     def select(self):
         self.button.click()
+        self.selected = True
 
     def checkSoup(self):
         if self.soup == None:
