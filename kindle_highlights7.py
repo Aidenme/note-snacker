@@ -22,7 +22,6 @@ def createInitialHighlightList():
     for div in divs[1:]:
         highlight = {}
         h = div.span.text.strip()
-        #test_book['color'] = ''
         highlight['deleted'] = False
         #give it an index number (so I can sort by index number )
         if 'highlight' in h:
@@ -152,8 +151,7 @@ def fillAllHighlights(highlightBook):
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, 'lxml')
 
-def getPageHighlightCount(book):
-    setSoup(book)
+def getPageHighlightCount():
     soup = BeautifulSoup(BROWSER.html, 'lxml')
     highlightDivs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
     highlightCount = len(highlightDivs) - 1 #subtract one because the first div is not a highlight
@@ -249,10 +247,6 @@ print("Now loading your selected browser, " + BROWSER_NAME + "...")
 signIn()
 
 library = getLibrary()
-
-library[1].getPageHighlightCount()
-
-exit()
 
 startingPageHighlightCount = getPageHighlightCount()
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
