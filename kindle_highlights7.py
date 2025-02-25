@@ -194,19 +194,20 @@ def exportToFile(highlightBook):
 
 #Gets the title, author, and button to press to open the book on the notebook page
 def getLibrary():
+    #Need soup on init to get stuff on the side bar to create the book.
     soup = BeautifulSoup(BROWSER.html, 'lxml')
-    library = soup.find_all("div", {"class": "kp-notebook-library-each-book"})
+    kindleLibrary = soup.find_all("div", {"class": "kp-notebook-library-each-book"})
 
-    libraryList = []
+    library = []
 
-    for book in library:
+    for book in kindleLibrary:
         button = BROWSER.find_by_id(book.get('id'))
         title = book.find('h2').text
         author = book.find('p').text
 
-        libraryList.append(Book(title, author, button))
+        library.append(Book(title, author, button, BROWSER))
 
-    return libraryList
+    return library
 
 #Lets you pick a book out of all books
 def pickBook():
@@ -247,6 +248,14 @@ print("Now loading your selected browser, " + BROWSER_NAME + "...")
 signIn()
 
 library = getLibrary()
+
+aBook = library[1]
+
+aBook.select()
+
+time.sleep(2)
+
+aBook.getSoup()
 
 startingPageHighlightCount = getPageHighlightCount()
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.

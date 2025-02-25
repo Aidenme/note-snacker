@@ -28,5 +28,5 @@ class Book:
     def setSoup(self, soup):
         self.soup = soup
 
-    def getSoup(self, browser):
-        self.soup = BeautifulSoup(browser.html, 'lxml')
+    def getSoup(self):
+        self.soup = BeautifulSoup(self.browser.html, 'lxml')
