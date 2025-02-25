@@ -114,11 +114,11 @@ def fillAllHighlights(highlightBook):
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, 'lxml')
 
-def exportToFile(highlightBook):
+def exportToFile(book):
     mergeHighlights = False
     f = open(BOOK_STORAGE_FOLDER + "test.html", mode='w', encoding='utf-8', errors='replace')
 
-    for highlight in test_book['highlights']:
+    for highlight in book.highlightList:
 
         f.write('<p>')
 
@@ -218,9 +218,7 @@ if startingPageHighlightCount == 0:
     print("No highlights found. Exiting...")
     exit()
 
-test_book = {}
-test_book['highlights'] = aBook.highlightList
-exportToFile(test_book)
+exportToFile(aBook)
 sys.exit("Initial highlights copied, exiting...")
 
 #Does a handful of checks to make sure the highlight colors are correct in the book to avoid disasters.
