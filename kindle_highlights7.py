@@ -123,20 +123,20 @@ def exportToFile(book):
         f.write('<p>')
 
         #Toggle "part of a multi-part highlight" on and off
-        if highlight['color'] == 'Yellow':
+        if highlight.color == 'Yellow':
             mergeHighlights = not mergeHighlights
 
-        if highlight['truncated']:
+        if highlight.truncated:
             f.write("<h4>HIGHLIGHT IS TRUNCATED</h4>")
 
-        f.write(highlight['highlight'])
+        f.write(highlight.text)
 
         f.write('</p>')
 
-        if highlight['note']:
+        if highlight.note:
             f.write('<h5>')
 
-            f.write(highlight['note'])
+            f.write(highlight.note)
 
             f.write('</h5>')
 
