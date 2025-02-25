@@ -9,6 +9,7 @@ class Book:
         self.browser = browser
         self.soup = None
         self.selected = False
+        self.highlightCount = 0
 
     def __str__(self):
         return self.title
@@ -24,9 +25,27 @@ class Book:
         else:
             print("Book has its soup!")
             return True
-        
-    def setSoup(self, soup):
-        self.soup = soup
 
     def getSoup(self):
         self.soup = BeautifulSoup(self.browser.html, 'lxml')
+
+    def getHighlightCount(self, soup):
+            highlightDivs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
+            highlightCount = len(highlightDivs) - 1 #subtract one because the first div is not a highlight
+            print("getSoupHighlightCount Result:")
+            print(highlightCount)
+            return highlightCount
+
+    def createHighlightList(self, soup):
+            divs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
+            print('Divs found on initial list creation:')
+            print(len(divs))
+            #highlightList = []
+
+    def updateHighlightList(self):
+        pass
+
+    def load(self):
+        self.getSoup()
+        self.highlightCount = self.getHighlightCount(self.soup)
+        self.createHighlightList(self.soup)

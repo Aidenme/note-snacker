@@ -151,14 +151,6 @@ def fillAllHighlights(highlightBook):
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, 'lxml')
 
-def getPageHighlightCount():
-    soup = BeautifulSoup(BROWSER.html, 'lxml')
-    highlightDivs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
-    highlightCount = len(highlightDivs) - 1 #subtract one because the first div is not a highlight
-    print("getPageHighlightCount Result:")
-    print(highlightCount)
-    return highlightCount
-
 def exportToFile(highlightBook):
     mergeHighlights = False
     f = open(BOOK_STORAGE_FOLDER + "test.html", mode='w', encoding='utf-8', errors='replace')
@@ -255,9 +247,9 @@ aBook.select()
 
 time.sleep(2)
 
-aBook.getSoup()
+aBook.load()
 
-startingPageHighlightCount = getPageHighlightCount()
+startingPageHighlightCount = aBook.highlightCount
 #End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
 if startingPageHighlightCount == 0:
     print("No highlights found. Exiting...")
