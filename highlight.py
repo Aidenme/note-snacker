@@ -27,15 +27,12 @@ class Highlight:
             self.truncated = False
 
     def getId(self, div):
-        if div.find('div', {'class': 'kp-notebook-highlight'}):
-            hTxtDiv = div.find('div', {'class': 'kp-notebook-highlight'})
-            self.id = hTxtDiv.get('id')
+        hTxtDiv = div.find('div', {'class': 'kp-notebook-highlight'})
+        self.id = hTxtDiv.get('id')
 
     def getText(self, div):
-        if div.find('div', {'class': 'kp-notebook-highlight'}):
-            hTxtDiv = div.find('div', {'class': 'kp-notebook-highlight'})
-            self.text = hTxtDiv.text.strip()
-            print(self.text)
+        hTxtDiv = div.find('div', {'class': 'kp-notebook-highlight'})
+        self.text = hTxtDiv.text.strip()
 
     def getNote(self, div):
         #Selects the div that contains a note that each highlight div should have

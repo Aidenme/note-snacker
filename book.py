@@ -52,13 +52,16 @@ class Book:
 
             highlight.getTruncated(div)
 
-            highlight.getId(div)
+            if div.find('div', {'class': 'kp-notebook-highlight'}):
 
-            highlight.getText(div)
+                highlight.getId(div)
 
-            highlight.getNote(div)
-  
-            highlightList.append(highlight)
+                highlight.getText(div)
+
+                highlight.getNote(div)
+
+                highlightList.append(highlight)
+        
         return highlightList
 
     def updateHighlightList(self):
