@@ -45,33 +45,20 @@ class Book:
         highlightList = []
         # skip the first div, as it's got weird stuff in it
         for div in divs[1:]:
+
             highlight = Highlight(div)
-            h = div.span.text.strip()
-            #give it an index number (so I can sort by index number )
-            if 'highlight' in h:
-                highlight.color = h[:h.find('highlight')].strip()
-            if div.find('div', {'class': 'a-alert-content'}):
-                highlight.truncated = True
-            else:
-                highlight.truncated = False
-            if div.find('div', {'class': 'kp-notebook-highlight'}):
-                hTxtDiv = div.find('div', {'class': 'kp-notebook-highlight'})
-                highlight.id = hTxtDiv.get('id')
-                highlight.text = hTxtDiv.text.strip()
 
-                #Selects the div that contains a note that each highlight div should have
-                noteTxtDiv = div.find('div', {'class': 'kp-notebook-note'})
-                #The id of note divs that don't actually have notes is always 'note-' so I'm not doing anything if that is found.
-                if noteTxtDiv.get('id') == 'note-':
-                    highlight.note = None
-                else:
-                    #Every note from the site inserts 'note:' without a space in front of each note. I'm taking that off and putting on my own
-                    #better version.
-                    highlight.note = 'NOTE: ' + noteTxtDiv.text.strip()[5:]
+            highlight.getColor(div)
 
-                
-                highlightList.append(highlight)
-                #then go through the process of deleting the highlight
+            highlight.getTruncated(div)
+
+            highlight.getId(div)
+
+            highlight.getText(div)
+
+            highlight.getNote(div)
+  
+            highlightList.append(highlight)
         return highlightList
 
     def updateHighlightList(self):
