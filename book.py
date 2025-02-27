@@ -51,16 +51,6 @@ class Book:
             
                 highlight = Highlight(div)
 
-                highlight.getColor(div)
-
-                highlight.getTruncated(div)
-
-                highlight.getId(div)
-
-                highlight.getText(div)
-
-                highlight.getNote(div)
-
                 highlightList.append(highlight)
         
         return highlightList
@@ -73,11 +63,12 @@ class Book:
         self.highlightCount = self.getHighlightCount(self.soup)
         self.highlightList = self.createHighlightList(self.soup)
 
-    def getFileName(self):
+    def getFileName(self): 
         regxPattern = '[^A-Za-z0-9 ]+'
         cleanTitle = re.sub(regxPattern, '', self.title)
         cleanAuthor = re.sub(regxPattern, '', self.author)
         fileName = cleanTitle + " - " + cleanAuthor + ".html"
+        
         return fileName
 
     def export(self, exportFolder):

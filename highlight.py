@@ -4,35 +4,35 @@ from bs4 import BeautifulSoup
 class Highlight:
     def __init__(self, div):
         self.div = div
-        self.text = None
-        self.note = None
-        self.color = None
-        self.id = None
-        self.truncated = False
+        self.text = self.getText(div)
+        self.note = self.getNote(div)
+        self.color = self.getColor(div)
+        self.id = self.getId(div)
+        self.truncated = self.getTruncated(div)
         self.deleted = False
-        self.makeHighlightFromDiv(div)
-
-    def makeHighlightFromDiv(self, div):
-        pass
-
+    
     def getColor(self, div):
         h = div.span.text.strip()
         if 'highlight' in h:
-                self.color = h[:h.find('highlight')].strip()
+                highlightColor = h[:h.find('highlight')].strip()
+        return highlightColor
 
     def getTruncated(self, div):
         if div.find('div', {'class': 'a-alert-content'}):
-            self.truncated = True
+            isTruncated = True
         else:
-            self.truncated = False
+            isTruncated = False
+        return isTruncated
 
     def getId(self, div):
         hTxtDiv = div.find('div', {'class': 'kp-notebook-highlight'})
-        self.id = hTxtDiv.get('id')
+        highlightId = hTxtDiv.get('id')
+        return highlightId
 
     def getText(self, div):
         hTxtDiv = div.find('div', {'class': 'kp-notebook-highlight'})
-        self.text = hTxtDiv.text.strip()
+        highlightText = hTxtDiv.text.strip()
+        return highlightText
 
     def getNote(self, div):
         #Selects the div that contains a note that each highlight div should have
@@ -40,10 +40,12 @@ class Highlight:
             noteTxtDiv = div.find('div', {'class': 'kp-notebook-note'})
             #The id of note divs that don't actually have notes is always 'note-' so I'm not doing anything if that is found.
             if noteTxtDiv.get('id') == 'note-':
-                self.note = None
+                highlightNote = None
             else:
                 #Every note from the site inserts 'note:' without a space in front of each note. I'm taking that off and putting on my own
                 #better version.
-                self.note = 'NOTE: ' + noteTxtDiv.text.strip()[5:]
+                highlightNote = 'NOTE: ' + noteTxtDiv.text.strip()[5:]
         else:
-            self.note = None
+            highlightNote = None
+        
+        return highlightNote
