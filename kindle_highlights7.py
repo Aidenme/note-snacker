@@ -1,3 +1,4 @@
+import config
 from dotenv import dotenv_values
 from splinter import Browser
 from bs4 import BeautifulSoup
@@ -6,11 +7,11 @@ import sys
 import json
 import time
 
-BROWSER_NAME = 'firefox'
+BROWSER_NAME = config.BROWSER_NAME
 AMZ_ACCOUNT = dotenv_values(".env")
-KINDLE_NOTEBOOK = 'https://read.amazon.com/kp/notebook'
+KINDLE_NOTEBOOK = config.KINDLE_NOTEBOOK
 BROWSER = Browser(BROWSER_NAME)
-BOOK_STORAGE_FOLDER = 'Book Storage/'
+BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 
 def checkColors(highlightBook):
 
