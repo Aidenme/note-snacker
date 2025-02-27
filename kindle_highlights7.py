@@ -115,39 +115,6 @@ def fillAllHighlights(highlightBook):
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, 'lxml')
 
-def exportToFile(book):
-    mergeHighlights = False
-    f = open(BOOK_STORAGE_FOLDER + "test.html", mode='w', encoding='utf-8', errors='replace')
-
-    for highlight in book.highlightList:
-
-        f.write('<p>')
-
-        #Toggle "part of a multi-part highlight" on and off
-        if highlight.color == 'Yellow':
-            mergeHighlights = not mergeHighlights
-
-        if highlight.truncated:
-            f.write("<h4>HIGHLIGHT IS TRUNCATED</h4>")
-
-        f.write(highlight.text)
-
-        f.write('</p>')
-
-        if highlight.note:
-            f.write('<h5>')
-
-            f.write(highlight.note)
-
-            f.write('</h5>')
-
-        if mergeHighlights == False:
-            f.write('<HR>')
-        else:
-            pass
-
-    f.close()
-
 #Gets the title, author, and button to press to open the book on the notebook page
 def getLibrary():
     #Need soup on init to get stuff on the side bar to create the book.
