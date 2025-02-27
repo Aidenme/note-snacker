@@ -205,7 +205,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[1]
+aBook = library[2]
 
 aBook.select()
 
@@ -218,6 +218,8 @@ startingPageHighlightCount = aBook.highlightCount
 if startingPageHighlightCount == 0:
     print("No highlights found. Exiting...")
     exit()
+
+print(aBook.getFileName())
 
 aBook.export(BOOK_STORAGE_FOLDER)
 #exportToFile(aBook)

@@ -1,6 +1,7 @@
 from splinter import Browser
 from bs4 import BeautifulSoup
 from highlight import Highlight
+import re
 
 class Book:
     def __init__(self, title, author, button, browser):
@@ -72,9 +73,16 @@ class Book:
         self.highlightCount = self.getHighlightCount(self.soup)
         self.highlightList = self.createHighlightList(self.soup)
 
+    def getFileName(self):
+        regxPattern = '[^A-Za-z0-9 ]+'
+        cleanTitle = re.sub(regxPattern, '', self.title)
+        cleanAuthor = re.sub(regxPattern, '', self.author)
+        fileName = cleanTitle + " - " + cleanAuthor + ".html"
+        return fileName
+
     def export(self, exportFolder):
         mergeHighlights = False
-        f = open(exportFolder + "test.html", mode='w', encoding='utf-8', errors='replace')
+        f = open(exportFolder + self.getFileName() , mode='w', encoding='utf-8', errors='replace')
 
         for highlight in self.highlightList:
 
