@@ -219,7 +219,8 @@ if startingPageHighlightCount == 0:
     print("No highlights found. Exiting...")
     exit()
 
-exportToFile(aBook)
+aBook.export(BOOK_STORAGE_FOLDER)
+#exportToFile(aBook)
 sys.exit("Initial highlights copied, exiting...")
 
 #Does a handful of checks to make sure the highlight colors are correct in the book to avoid disasters.

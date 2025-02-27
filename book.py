@@ -71,3 +71,37 @@ class Book:
         self.getSoup()
         self.highlightCount = self.getHighlightCount(self.soup)
         self.highlightList = self.createHighlightList(self.soup)
+
+    def export(self, exportFolder):
+        mergeHighlights = False
+        f = open(exportFolder + "test.html", mode='w', encoding='utf-8', errors='replace')
+
+        for highlight in self.highlightList:
+
+            f.write('<p>')
+
+            #Toggle "part of a multi-part highlight" on and off
+            if highlight.color == 'Yellow':
+                mergeHighlights = not mergeHighlights
+
+            if highlight.truncated:
+                f.write("<h4>HIGHLIGHT IS TRUNCATED</h4>")
+
+            f.write(highlight.text)
+
+            f.write('</p>')
+
+            if highlight.note:
+                f.write('<h5>')
+
+                f.write(highlight.note)
+
+                f.write('</h5>')
+
+            if mergeHighlights == False:
+                f.write('<HR>')
+            else:
+                pass
+
+        f.close()
+
