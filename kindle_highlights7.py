@@ -172,7 +172,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[2]
+aBook = library[1]
 
 aBook.select()
 

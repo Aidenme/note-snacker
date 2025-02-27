@@ -9,6 +9,7 @@ class Book:
         self.author = author
         self.button = button
         self.browser = browser
+        self.fileName = self.getFileName()
         self.soup = None
         self.selected = False
         self.highlightCount = 0
@@ -46,14 +47,13 @@ class Book:
         highlightList = []
         # skip the first div, as it's got weird stuff in it
         for div in divs[1:]:
-
-            highlight = Highlight(div)
-
-            highlight.getColor(div)
-
-            highlight.getTruncated(div)
-
             if div.find('div', {'class': 'kp-notebook-highlight'}):
+            
+                highlight = Highlight(div)
+
+                highlight.getColor(div)
+
+                highlight.getTruncated(div)
 
                 highlight.getId(div)
 
@@ -82,7 +82,7 @@ class Book:
 
     def export(self, exportFolder):
         mergeHighlights = False
-        f = open(exportFolder + self.getFileName() , mode='w', encoding='utf-8', errors='replace')
+        f = open(exportFolder + self.fileName , mode='w', encoding='utf-8', errors='replace')
 
         for highlight in self.highlightList:
 
