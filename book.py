@@ -109,9 +109,12 @@ class Book:
     def getLocalHighlightTextList(self):
         htmlFile = (open(self.BOOK_STORAGE_FOLDER + self.fileName , mode='r' , encoding='utf-8'))
 
-        soup = BeautifulSoup(htmlFile, 'lxml')
-        highlightTextList = soup.find_all("p")
+        highlightTextList = []
 
-        print(highlightTextList[1])
+        soup = BeautifulSoup(htmlFile, 'lxml')
+        for pTag in soup.find_all("p"):
+            highlightTextList.append(pTag.get_text())
+
+        print(highlightTextList[15])
 
 
