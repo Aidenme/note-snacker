@@ -1,3 +1,4 @@
+import config
 from splinter import Browser
 from bs4 import BeautifulSoup
 from highlight import Highlight
@@ -14,6 +15,7 @@ class Book:
         self.selected = False
         self.highlightCount = 0
         self.highlightList = []
+        self.BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 
     def __str__(self):
         return self.title
@@ -71,9 +73,9 @@ class Book:
         
         return fileName
 
-    def export(self, exportFolder):
+    def export(self):
         mergeHighlights = False
-        f = open(exportFolder + self.fileName , mode='w', encoding='utf-8', errors='replace')
+        f = open(self.BOOK_STORAGE_FOLDER + self.fileName , mode='w', encoding='utf-8', errors='replace')
 
         for highlight in self.highlightList:
 
