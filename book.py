@@ -132,7 +132,7 @@ class Book:
         if newHighlightCount == 0:
             print("No new highlights found")
         else:
-            print("Found " + str(newHighlightCount) + " highlights!")
+            print("Found " + str(newHighlightCount) + " new highlights!")
             return newHighlights
 
 

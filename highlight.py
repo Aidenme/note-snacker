@@ -11,6 +11,9 @@ class Highlight:
         self.truncated = self.getTruncated(div)
         self.deleted = False
     
+    def __str__(self):
+        return self.text
+    
     def getColor(self, div):
         h = div.span.text.strip()
         if 'highlight' in h:
