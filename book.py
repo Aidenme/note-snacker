@@ -115,6 +115,26 @@ class Book:
         for pTag in soup.find_all("p"):
             highlightTextList.append(pTag.get_text())
 
-        print(highlightTextList[15])
+        return highlightTextList
+    
+    def getNewHighlights(self):
+
+        newHighlights = []
+        newHighlightCount = 0
+        
+        localHighlights = self.getLocalHighlightTextList()
+
+        for onlineHighlight in self.highlightList:
+            if onlineHighlight.text not in localHighlights:
+                newHighlightCount += 1
+                newHighlights.append(onlineHighlight)
+
+        if newHighlightCount == 0:
+            print("No new highlights found")
+        else:
+            print("Found " + str(newHighlightCount) + " highlights!")
+            return newHighlights
+
+
 
 

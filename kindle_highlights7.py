@@ -202,7 +202,7 @@ print(aBook.getFileName())
 
 aBook.export()
 
-aBook.getLocalHighlightTextList()
+aBook.getNewHighlights()
 
 sys.exit("Initial highlights copied, exiting...")
 
