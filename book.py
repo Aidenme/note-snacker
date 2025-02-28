@@ -79,14 +79,14 @@ class Book:
 
         for highlight in self.highlightList:
 
-            f.write('<p>')
-
             #Toggle "part of a multi-part highlight" on and off
             if highlight.color == 'Yellow':
                 mergeHighlights = not mergeHighlights
 
             if highlight.truncated:
-                f.write("<h4>HIGHLIGHT IS TRUNCATED</h4>")
+                f.write('<p ' + config.TRUNCATED_HIGHLIGHT_STYLE + '>')
+            else:
+                f.write('<p>')
 
             f.write(highlight.text)
 
@@ -105,4 +105,13 @@ class Book:
                 pass
 
         f.close()
+
+    def getLocalHighlightTextList(self):
+        htmlFile = (open(self.BOOK_STORAGE_FOLDER + self.fileName , mode='r' , encoding='utf-8'))
+
+        soup = BeautifulSoup(htmlFile, 'lxml')
+        highlightTextList = soup.find_all("p")
+
+        print(highlightTextList[1])
+
 
