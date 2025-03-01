@@ -187,11 +187,6 @@ library = getLibrary()
 
 aBook = library[0]
 
-if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
-    print("Update the book")
-else:
-    print("Make the book")
-
 sys.exit()
 
 aBook.select()
@@ -200,13 +195,14 @@ time.sleep(2)
 
 aBook.load()
 
-startingPageHighlightCount = aBook.highlightCount
-# End the program if startingPageHighlightCount is 0 because that means there are no highlights to copy at all.
-if startingPageHighlightCount == 0:
-    print("No highlights found. Exiting...")
+if aBook.highlightCount == 0:
+    print("No online highlights found, exiting...")
     exit()
 
-
+if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
+    print("Update the book")
+else:
+    print("Make the book")
 
 print(aBook.getFileName())
 
