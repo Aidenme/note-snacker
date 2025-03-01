@@ -6,6 +6,7 @@ from book import Book
 import sys
 import json
 import time
+import os
 
 BROWSER_NAME = config.BROWSER_NAME
 AMZ_ACCOUNT = dotenv_values(".env")
@@ -184,7 +185,14 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[1]
+aBook = library[0]
+
+if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
+    print("Update the book")
+else:
+    print("Make the book")
+
+sys.exit()
 
 aBook.select()
 
@@ -197,6 +205,8 @@ startingPageHighlightCount = aBook.highlightCount
 if startingPageHighlightCount == 0:
     print("No highlights found. Exiting...")
     exit()
+
+
 
 print(aBook.getFileName())
 
