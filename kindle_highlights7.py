@@ -14,51 +14,6 @@ KINDLE_NOTEBOOK = config.KINDLE_NOTEBOOK
 BROWSER = Browser(BROWSER_NAME)
 BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 
-
-def checkColors(highlightBook):
-
-    errorCount = 0
-    # To determine if there is an even number of yellow highlights to ensure every opening yellow highlight has a closing highlight.
-    yellowCount = 0
-    # Indicates if the following highlights should (or should not) be considered part of a multi-highlight
-    openYellow = False
-
-    for highlight in highlightBook:
-
-        if highlight["color"] == "Yellow":
-            # When a yellow highlight is found it needs to be added to the total yellow highlight count for the even highlight test later
-            yellowCount += 1
-            # When yellow highlights are hit this will either start a multi-highlight or close it
-            openYellow = not openYellow
-            # I don't care about the yellow highlight itself, I just need those two above values to change when a yellow highlight is hit.
-            # This causes the for loop to move on to the next highlight without progressing to those if statements below.
-            continue
-
-        # If a not pink highlight is found between two yellow highlights that means something is the wrong color and what should be a multi-highlight is not
-        if openYellow == True and highlight["color"] != "Pink":
-            print("Multi-highlight breaker found:")
-            printHighlight(highlight)
-            errorCount += 1
-
-        # If a pink highlight is found and it's not part of a multi-highlight something is amiss.
-        if openYellow == False and highlight["color"] == "Pink":
-            print("Unclosed pink highlight found:")
-            printHighlight(highlight)
-            errorCount += 1
-
-    # An uneven number of yellow highlights means a yellow highlight was opened and not closed
-    if yellowCount % 2 != 0:
-        print("Unclosed yellow highlight detected")
-        errorCount += 1
-
-    if errorCount != 0:
-        print(str(errorCount) + " error(s) detected")
-        print("Please fix errors and try again")
-        exit()
-    else:
-        print("No errors detected, color checks PASSED!")
-
-
 def deleteHighlight(testHighlight):
     time.sleep(2)
     cleanId = testHighlight["id"][len("highlight-") :]
@@ -196,6 +151,8 @@ aBook.load()
 if aBook.highlightCount == 0:
     print("No online highlights found, exiting...")
     exit()
+
+aBook.checkColors()
 
 if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
     

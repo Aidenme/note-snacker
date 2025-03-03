@@ -146,7 +146,8 @@ class Book:
         self.export(self.fileName, self.highlightList, self.BOOK_STORAGE_FOLDER)
         self.export(self.fileName, self.highlightList, config.NEW_HIGHLIGHT_FOLDER)
 
-    def checkColors(highlightBook):
+    def checkColors(self):
+        print("Checking highlight colors...")
 
         errorCount = 0
         # To determine if there is an even number of yellow highlights to ensure every opening yellow highlight has a closing highlight.
@@ -154,9 +155,9 @@ class Book:
         # Indicates if the following highlights should (or should not) be considered part of a multi-highlight
         openYellow = False
 
-        for highlight in highlightBook:
+        for highlight in self.highlightList:
 
-            if highlight["color"] == "Yellow":
+            if highlight.color == "Yellow":
                 # When a yellow highlight is found it needs to be added to the total yellow highlight count for the even highlight test later
                 yellowCount += 1
                 # When yellow highlights are hit this will either start a multi-highlight or close it
@@ -166,15 +167,15 @@ class Book:
                 continue
 
             # If a not pink highlight is found between two yellow highlights that means something is the wrong color and what should be a multi-highlight is not
-            if openYellow == True and highlight["color"] != "Pink":
+            if openYellow == True and highlight.color != "Pink":
                 print("Multi-highlight breaker found:")
-                printHighlight(highlight)
+                print(highlight)
                 errorCount += 1
 
             # If a pink highlight is found and it's not part of a multi-highlight something is amiss.
-            if openYellow == False and highlight["color"] == "Pink":
+            if openYellow == False and highlight.color == "Pink":
                 print("Unclosed pink highlight found:")
-                printHighlight(highlight)
+                print(highlight)
                 errorCount += 1
 
         # An uneven number of yellow highlights means a yellow highlight was opened and not closed
@@ -183,7 +184,7 @@ class Book:
             errorCount += 1
 
         if errorCount != 0:
-            print(str(errorCount) + " error(s) detected")
+            print(str(errorCount) + "highlight color error(s) detected. Please fix highlight issues and try again.")
             print("Please fix errors and try again")
             exit()
         else:
