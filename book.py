@@ -73,11 +73,11 @@ class Book:
         
         return fileName
 
-    def export(self):
+    def export(self, fileName, highlightList, exportFolder):
         mergeHighlights = False
-        f = open(self.BOOK_STORAGE_FOLDER + self.fileName , mode='w', encoding='utf-8', errors='replace')
+        f = open(exportFolder + fileName , mode='a', encoding='utf-8', errors='replace')
 
-        for highlight in self.highlightList:
+        for highlight in highlightList:
 
             #Toggle "part of a multi-part highlight" on and off
             if highlight.color == 'Yellow':
@@ -112,6 +112,9 @@ class Book:
         highlightTextList = []
 
         soup = BeautifulSoup(htmlFile, 'lxml')
+
+        htmlFile.close()
+        
         for pTag in soup.find_all("p"):
             highlightTextList.append(pTag.get_text())
 
@@ -134,6 +137,14 @@ class Book:
         else:
             print("Found " + str(newHighlightCount) + " new highlights!")
             return newHighlights
+        
+    def update(self, newHighlights):
+        self.export(self.fileName, newHighlights, self.BOOK_STORAGE_FOLDER) 
+        self.export(fileName= self.fileName, highlightList = newHighlights, exportFolder = config.NEW_HIGHLIGHT_FOLDER)
+
+    def make(self):
+        self.export(self.fileName, self.highlightList, self.BOOK_STORAGE_FOLDER)
+        self.export(self.fileName, self.highlightList, config.NEW_HIGHLIGHT_FOLDER)
 
 
 

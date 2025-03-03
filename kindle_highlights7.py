@@ -187,8 +187,6 @@ library = getLibrary()
 
 aBook = library[0]
 
-sys.exit()
-
 aBook.select()
 
 time.sleep(2)
@@ -200,15 +198,24 @@ if aBook.highlightCount == 0:
     exit()
 
 if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
-    print("Update the book")
+    
+    newHighlights = aBook.getNewHighlights()
+    
+    if newHighlights == None:
+        
+        print("No new highlights found for stored book.")
+    
+    else:
+        
+        aBook.update(newHighlights)
 else:
-    print("Make the book")
+    aBook.make()
 
-print(aBook.getFileName())
+#print(aBook.getFileName())
 
-aBook.export()
+#aBook.export()
 
-aBook.getNewHighlights()
+#aBook.getNewHighlights()
 
 sys.exit("Initial highlights copied, exiting...")
 
