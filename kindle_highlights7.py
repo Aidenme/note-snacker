@@ -189,7 +189,7 @@ aBook = library[0]
 
 aBook.select()
 
-time.sleep(2)
+time.sleep(5)
 
 aBook.load()
 
