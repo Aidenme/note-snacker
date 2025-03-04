@@ -147,9 +147,8 @@ class Book:
         self.export(self.fileName, self.highlightList, config.NEW_HIGHLIGHT_FOLDER)
 
     def checkColors(self):
-        print("Checking highlight colors...")
+        print("Checking highlight colors...\n")
 
-        errorCount = 0
         # To determine if there is an even number of yellow highlights to ensure every opening yellow highlight has a closing highlight.
         yellowCount = 0
         # Indicates if the following highlights should (or should not) be considered part of a multi-highlight
@@ -168,27 +167,24 @@ class Book:
 
             # If a not pink highlight is found between two yellow highlights that means something is the wrong color and what should be a multi-highlight is not
             if openYellow == True and highlight.color != "Pink":
-                print("Multi-highlight breaker found:")
+                print("ERROR: HIGHLIGHT IS THE WRONG COLOR AFTER AN OPEN YELLOW HIGHLIGHT\n")
+                print("BROKEN HIGHLIGHT:")
                 print(highlight)
-                errorCount += 1
+                exit()
 
             # If a pink highlight is found and it's not part of a multi-highlight something is amiss.
             if openYellow == False and highlight.color == "Pink":
-                print("Unclosed pink highlight found:")
+                print("ERROR: PINK HIGHLIGHT NOT BETWEEN YELLOW HIGHLIGHTS\n")
+                print("BROKEN HIGHLIGHT")
                 print(highlight)
-                errorCount += 1
+                exit()
 
         # An uneven number of yellow highlights means a yellow highlight was opened and not closed
         if yellowCount % 2 != 0:
-            print("Unclosed yellow highlight detected")
-            errorCount += 1
-
-        if errorCount != 0:
-            print(str(errorCount) + "highlight color error(s) detected. Please fix highlight issues and try again.")
-            print("Please fix errors and try again")
+            print("ERROR: UNEVEN NUMBER OF YELLOW HIGHLIGHTS. SOMETHING WAS OPENED AND NOT CLOSED")
             exit()
-        else:
-            print("No errors detected, color checks PASSED!")
+
+        print("No highlight errors detected!")
 
 
 
