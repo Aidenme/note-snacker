@@ -42,7 +42,7 @@ class Book:
             print(highlightCount)
             return highlightCount
 
-    def createHighlightList(self, soup):
+    def createHighlightList(self, soup, browser):
         divs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
         print('Divs found on initial list creation:')
         print(len(divs))
@@ -51,7 +51,7 @@ class Book:
         for div in divs[1:]:
             if div.find('div', {'class': 'kp-notebook-highlight'}):
             
-                highlight = Highlight(div)
+                highlight = Highlight(div, browser)
 
                 highlightList.append(highlight)
         
@@ -63,7 +63,7 @@ class Book:
     def load(self):
         self.getSoup()
         self.highlightCount = self.getHighlightCount(self.soup)
-        self.highlightList = self.createHighlightList(self.soup)
+        self.highlightList = self.createHighlightList(self.soup, self.browser)
 
     def getFileName(self): 
         regxPattern = '[^A-Za-z0-9 ]+'
@@ -185,6 +185,12 @@ class Book:
             exit()
 
         print("No highlight errors detected!")
+
+    def highlightButtonClick(self):
+        self.highlightList[0].clickOptionsButton()
+
+    def deleteHighlight(self, highlightIndex):
+        self.highlightList[highlightIndex].delete()
 
 
 

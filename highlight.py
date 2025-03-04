@@ -1,14 +1,17 @@
 from splinter import Browser
 from bs4 import BeautifulSoup
+import time
 
 class Highlight:
-    def __init__(self, div):
+    def __init__(self, div, browser):
         self.div = div
+        self.browser = browser
         self.text = self.getText(div)
         self.note = self.getNote(div)
         self.color = self.getColor(div)
         self.id = self.getId(div)
         self.truncated = self.getTruncated(div)
+        self.optionsButton = self.getOptionsButton(browser)
         self.deleted = False
     
     def __str__(self):
@@ -52,3 +55,31 @@ class Highlight:
             highlightNote = None
         
         return highlightNote
+    
+    def getOptionsButton(self, browser):
+        cleanId = self.id[len("highlight-") :]
+        newId = "popover-" + cleanId
+        optionsButton = browser.find_by_id(newId)
+        return optionsButton
+    
+    def clickOptionsButton(self):
+        self.optionsButton.click()
+
+    def delete(self):
+        
+        self.optionsButton.click()
+        
+        time.sleep(2)
+        
+        deleteButton = self.browser.find_by_id("deletehighlight")
+        deleteButton.click()
+
+        time.sleep(2)
+        
+        deleteConfirmButton = self.browser.find_by_xpath(
+        "//html/body/div[4]/div/div/div[2]/span[2]/span/span/input"
+        )
+        deleteConfirmButton.click()
+
+
+

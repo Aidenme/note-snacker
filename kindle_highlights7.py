@@ -14,22 +14,6 @@ KINDLE_NOTEBOOK = config.KINDLE_NOTEBOOK
 BROWSER = Browser(BROWSER_NAME)
 BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 
-def deleteHighlight(testHighlight):
-    time.sleep(2)
-    cleanId = testHighlight["id"][len("highlight-") :]
-    newId = "popover-" + cleanId
-    optionsButton = BROWSER.find_by_id(newId)
-    optionsButton.click()
-    time.sleep(2)
-    deleteButton = BROWSER.find_by_id("deletehighlight")
-    deleteButton.click()
-    time.sleep(2)
-    deleteConfirm = BROWSER.find_by_xpath(
-        "//html/body/div[4]/div/div/div[2]/span[2]/span/span/input"
-    )
-    deleteConfirm.click()
-
-
 def getHighlightFromId(highlightId):
     newHighlight = {}
     soup = BeautifulSoup(BROWSER.html, "lxml")
@@ -140,7 +124,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[0]
+aBook = library[3]
 
 aBook.select()
 
@@ -167,6 +151,8 @@ if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
         aBook.update(newHighlights)
 else:
     aBook.make()
+
+aBook.deleteHighlight(5)
 
 #print(aBook.getFileName())
 
