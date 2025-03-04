@@ -152,8 +152,6 @@ if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
 else:
     aBook.make()
 
-aBook.deleteHighlight(5)
-
 #print(aBook.getFileName())
 
 #aBook.export()
