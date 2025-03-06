@@ -3,6 +3,7 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 from highlight import Highlight
 import re
+import time
 
 class Book:
     def __init__(self, title, author, button, browser):
@@ -56,9 +57,6 @@ class Book:
                 highlightList.append(highlight)
         
         return highlightList
-
-    def updateHighlightList(self):
-        pass
 
     def load(self):
         self.getSoup()
@@ -218,6 +216,7 @@ class Book:
         for highlight in self.highlightList:
             if highlight.truncated == False:
                 highlight.delete()
+                time.sleep(2)
 
     def updateHighlights(self):
         
@@ -225,6 +224,11 @@ class Book:
             if highlight.truncated == True:
                 self.updateHighlightText(highlight)
                 self.updateHighlightTruncated(highlight)
+
+    def processHighlights(self):
+        self.deleteCompleteHighlights(self)
+        self.browser.reload()
+        self.updateHighlights(self)
 
 
 
