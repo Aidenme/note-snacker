@@ -12,6 +12,12 @@ THE LOOP
     Update the text of the highlight
 Find the highlights that are no longer truncated
 
+Update highlight needs to be on the book object
+UpdateHighlight(highlight)
+
+updatedHighlight = Highlight(div, browser)
+
+
 
 THINKING WITH OBJECTS
 Before anything can happen with a book it needs to be setup.
