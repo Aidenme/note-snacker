@@ -192,20 +192,40 @@ class Book:
     def deleteHighlight(self, highlightIndex):
         self.highlightList[highlightIndex].delete()
 
+    #Runs in the book class because highlights need the full soup to reference themselves
     def updateHighlightText(self, highlight):
         
-        #HCan't reference the div grabbed in the loop because they are all the same
+        #HCan't reference highlight.div itself because they are all the same
         highlightDiv = self.soup.find("div", {"id": highlight.id})
 
         newText = highlightDiv.text.strip()
         
         highlight.text = newText
 
+    #Runs in the book class because highlights need the full soup to reference themselves
+    def updateHighlightTruncated(self, highlight):
+
+        highlightDiv = self.soup.find("div", {"id": highlight.id})
+
+        if highlightDiv.find("div", {"class": "a-alert-content"}):
+            highlight.truncated = True
+        else:
+            highlight.truncated = False
+
+
     def deleteCompleteHighlights(self):
         
         for highlight in self.highlightList:
             if highlight.truncated == False:
                 highlight.delete()
+
+    def updateHighlights(self):
+        
+        for highlight in self.highlightList:
+            if highlight.truncated == True:
+                self.updateHighlightText(highlight)
+                self.updateHighlightTruncated(highlight)
+
 
 
 
