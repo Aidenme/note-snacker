@@ -71,14 +71,18 @@ class Highlight:
         
         time.sleep(2)
         
+        #Click the delete option that appears when you open the options list
         deleteButton = self.browser.find_by_id("deletehighlight")
         deleteButton.click()
 
         time.sleep(2)
         
+        #You'll be asked to confirm deleting the highlight
         deleteConfirmButton = self.browser.find_by_xpath(
         "//html/body/div[4]/div/div/div[2]/span[2]/span/span/input"
         )
+
+        #Clcking the confirm button deletes the highlight for good
         deleteConfirmButton.click()
 
 

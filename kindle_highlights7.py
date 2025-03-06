@@ -150,6 +150,7 @@ if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
         
         aBook.update(newHighlights)
 else:
+    
     aBook.make()
 
 #print(aBook.getFileName())

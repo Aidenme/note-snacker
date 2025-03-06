@@ -1,3 +1,18 @@
+THE FINAL PROCESS
+Get all the highlights
+
+THE LOOP
+ Delete all the online highlights that are NOT truncated
+ Refresh the page
+ For the highlights that are truncated in the local highlight list
+  Check if the online highlight is truncated
+   If truncated
+    Do Nothing
+   If not truncated
+    Update the text of the highlight
+Find the highlights that are no longer truncated
+
+
 THINKING WITH OBJECTS
 Before anything can happen with a book it needs to be setup.
 Setup:
