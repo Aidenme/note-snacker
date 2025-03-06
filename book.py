@@ -192,13 +192,13 @@ class Book:
     def deleteHighlight(self, highlightIndex):
         self.highlightList[highlightIndex].delete()
 
-    def updateHighlight(self, highlight, soup, browser):
+    def updateHighlightText(self, highlight):
         
-        highlightDiv = soup.find("div", {"id": highlight.id})
+        highlightDiv = self.soup.find("div", {"id": highlight.id})
 
-        newHighlight = Highlight(highlightDiv, browser)
-
-        return newHighlight
+        newText = highlightDiv.text.strip()
+        
+        highlight.text = newText
 
 
 

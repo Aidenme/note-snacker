@@ -124,7 +124,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[3]
+aBook = library[4]
 
 aBook.select()
 
@@ -152,6 +152,16 @@ if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
 else:
     
     aBook.make()
+
+testHighlightIndex = 0
+
+print(aBook.highlightList[testHighlightIndex])
+
+print("\n")
+
+aBook.updateHighlightText(aBook.highlightList[testHighlightIndex])
+
+print(aBook.highlightList[testHighlightIndex])
 
 #print(aBook.getFileName())
 
