@@ -194,11 +194,19 @@ class Book:
 
     def updateHighlightText(self, highlight):
         
+        #HCan't reference the div grabbed in the loop because they are all the same
         highlightDiv = self.soup.find("div", {"id": highlight.id})
 
         newText = highlightDiv.text.strip()
         
         highlight.text = newText
+
+    def deleteCompleteHighlights(self):
+        
+        for highlight in self.highlightList:
+            if highlight.truncated == False:
+                highlight.delete()
+
 
 
 
