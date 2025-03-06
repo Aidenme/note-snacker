@@ -153,16 +153,6 @@ else:
     
     aBook.make()
 
-testHighlightIndex = 0
-
-print(aBook.highlightList[testHighlightIndex])
-
-print("\n")
-
-aBook.updateHighlightText(aBook.highlightList[testHighlightIndex])
-
-print(aBook.highlightList[testHighlightIndex])
-
 #print(aBook.getFileName())
 
 #aBook.export()
