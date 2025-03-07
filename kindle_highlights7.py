@@ -113,35 +113,31 @@ aBook.checkColors()
 while aBook.checkForTruncatedHighlights == True:
 
     #Deletes highlights that are not truncated
-    aBook.deleteCompleteHighlights()
+    try:
+        aBook.deleteCompleteHighlights()
+    except:
+        print("An Error occured: Unable to delete all highlights!")
+        export(aBook)
 
     #Reloading should unlock highlights that were previously truncated
-    BROWSER.reload()
-    aBook.getSoup()
+    try:
+        BROWSER.reload()
+        aBook.getSoup()
+    except:
+        print("An error occured: Unable to update soup!")
+        export(aBook)
 
     #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.
-    aBook.updateHighlightList()
+    
+    try:
+        aBook.updateHighlightList()
+    except:
+        print("An error occured: Unable to update Highlight List!")
+        export(aBook)
 
 else:
     print("No more truncated highlights detected. Everything should be copied now!")
-
-if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
-    
-    #newHighlights are just-downloaded highlights that aren't in the html file.
-    newHighlights = aBook.getNewHighlights()
-    
-    if newHighlights == None:
-        
-        print("No new highlights found for stored book.")
-    
-    else:
-        
-        aBook.update(newHighlights)
-else:
-    
-    aBook.make()
-
-export(aBook)
+    export(aBook)
 
 #print(aBook.getFileName())
 
