@@ -14,51 +14,6 @@ KINDLE_NOTEBOOK = config.KINDLE_NOTEBOOK
 BROWSER = Browser(BROWSER_NAME)
 BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 
-def getHighlightFromId(highlightId):
-    newHighlight = {}
-    soup = BeautifulSoup(BROWSER.html, "lxml")
-    highlightDiv = soup.find("div", {"id": highlightId})
-
-    if highlightDiv.find("div", {"class": "a-alert-content"}):
-        newHighlight["truncated"] = True
-    else:
-        newHighlight["truncated"] = False
-
-    newHighlight["highlight"] = highlightDiv.text.strip()
-    return newHighlight
-
-
-def printHighlight(highlightFull):
-    print(highlightFull["highlight"][:20])
-
-
-def fillAllHighlights(highlightBook):
-    newHighlightParts = {}
-    for highlight in highlightBook["highlights"]:
-        printHighlight(highlight)
-        if highlight["deleted"] == False:
-            if highlight["truncated"]:
-                newHighlightParts = getHighlightFromId(highlight["id"])
-                if newHighlightParts["truncated"]:
-                    pass
-                else:
-                    highlight["highlight"] = newHighlightParts["highlight"]
-
-                    # Now that it is discovered that highlight is no longer truncated, let the program know that.
-                    highlight["truncated"] = False
-                    print("Deleting Highlight")
-                    deleteHighlight(highlight)
-                    highlight["deleted"] = True
-            else:
-                deleteHighlight(highlight)
-                highlight["deleted"] = True
-                print("Deleting Highlight")
-        else:
-            pass
-
-    return highlightBook
-
-
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, "lxml")
 
@@ -149,7 +104,7 @@ while aBook.checkForTruncatedHighlights == True:
     BROWSER.reload()
     aBook.getSoup()
 
-    #Finds the highlights that got untruncated
+    #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.
     aBook.updateHighlightList()
 
 else:
