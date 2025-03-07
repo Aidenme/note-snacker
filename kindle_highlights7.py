@@ -94,7 +94,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[4]
+aBook = library[6]
 
 aBook.select()
 
@@ -109,6 +109,8 @@ else:
     aBook.createHighlightList()
 
 aBook.checkColors()
+
+#sys.exit("Exit before running the true loop to make sure I'm doing this on a book I wanna")
 
 while aBook.checkForTruncatedHighlights == True:
 

@@ -56,7 +56,7 @@ class Book:
 
                 highlightList.append(highlight)
         
-        return highlightList
+        self.highlightList = highlightList
 
     def getFileName(self):
         regxPattern = '[^A-Za-z0-9 ]+'
