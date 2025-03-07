@@ -145,12 +145,13 @@ while aBook.checkForTruncatedHighlights == True:
 
     #Reloading should unlock highlights that were previously truncated
     BROWSER.reload()
+    aBook.getSoup()
 
     #Finds the highlights that got untruncated
     aBook.updateHighlightList()
 
 else:
-    print("No more truncated highlights detected.")
+    print("No more truncated highlights detected. Everything should be copied now!")
 
 if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
     
