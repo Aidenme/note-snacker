@@ -94,7 +94,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[7]
+aBook = library[9]
 
 aBook.select()
 
@@ -107,6 +107,8 @@ if aBook.getHighlightCount() == 0:
     exit()
 else:
     aBook.createHighlightList()
+
+export(aBook)
 
 aBook.checkColors()
 
@@ -133,13 +135,13 @@ while aBook.getTruncatedHighlightCount() > 0:
         sys.exit()
 
     #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.  
-    try:
-        aBook.updateHighlightList()
-    except Exception as e:
-        print("An error occured: Unable to update highlight list")
-        print(e)
-        export(aBook)
-        sys.exit()
+    #try:
+    aBook.updateHighlightList()
+    #except Exception as e:
+        #print("An error occured: Unable to update highlight list")
+        #print(e)
+        #export(aBook)
+        #sys.exit()
 
 else:
     print("No more truncated highlights detected. Everything should be copied now!")
