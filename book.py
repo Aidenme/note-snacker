@@ -220,15 +220,12 @@ class Book:
                 self.updateHighlightText(highlight)
                 self.updateHighlightTruncated(highlight)
 
-    def checkForTruncatedHighlights(self):
+    def getTruncatedHighlightCount(self):
         truncatedHighlightCount = 0
         for highlight in self.highlightList: 
             if highlight.truncated == True:
                 truncatedHighlightCount += 1
-        if truncatedHighlightCount > 0:
-            return True
-        else:
-            return False
+        return truncatedHighlightCount
 
 
 

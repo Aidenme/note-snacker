@@ -110,9 +110,11 @@ else:
 
 aBook.checkColors()
 
-#sys.exit("Exit before running the true loop to make sure I'm doing this on a book I wanna")
+print(aBook.getTruncatedHighlightCount())
 
-while aBook.checkForTruncatedHighlights == True:
+sys.exit("Exit before running the true loop to make sure I'm doing this on a book I wanna")
+
+while aBook.getTruncatedHighlightCount() > 0:
 
     #Deletes highlights that are not truncated
     try:
