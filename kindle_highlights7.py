@@ -110,9 +110,7 @@ else:
 
 aBook.checkColors()
 
-print(aBook.getTruncatedHighlightCount())
-
-sys.exit("Exit before running the true loop to make sure I'm doing this on a book I wanna")
+sys.exit()
 
 while aBook.getTruncatedHighlightCount() > 0:
 
@@ -125,7 +123,8 @@ while aBook.getTruncatedHighlightCount() > 0:
 
     #Reloading should unlock highlights that were previously truncated
     try:
-        BROWSER.reload()
+        #Select the book to reload it. A page refresh would load up the book at index 0.
+        aBook.select()
         aBook.getSoup()
     except:
         print("An error occured: Unable to update soup!")
