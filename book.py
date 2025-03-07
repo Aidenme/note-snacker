@@ -187,10 +187,8 @@ class Book:
 
     #Runs in the book class because highlights need the full soup to reference themselves
     def updateHighlightText(self, highlight):
-        print("Running updateHighlightText. Highlight text is:")
-        print(highlight.text)
         
-        #HCan't reference highlight.div itself because they are all the same
+        #Can't reference highlight.div itself because they are all the same
         highlightDiv = self.soup.find("div", {"id": highlight.id})
 
         newText = highlightDiv.text.strip()
