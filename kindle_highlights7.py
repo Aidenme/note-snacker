@@ -94,7 +94,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[0]
+aBook = library[7]
 
 aBook.select()
 

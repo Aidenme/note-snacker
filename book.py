@@ -216,7 +216,7 @@ class Book:
                     highlight.delete()
                     time.sleep(2)
 
-    def updateHighlights(self):
+    def updateHighlightList(self):
         
         for highlight in self.highlightList:
             if highlight.truncated == True:
@@ -225,10 +225,16 @@ class Book:
 
     def getTruncatedHighlightCount(self):
         truncatedHighlightCount = 0
+        notTruncatedHighlightCount = 0
         for highlight in self.highlightList: 
             if highlight.truncated == True:
                 truncatedHighlightCount += 1
+            else:
+                notTruncatedHighlightCount += 1
+        
         print("Truncated highlight count: " + str(truncatedHighlightCount))
+        print("Untruncated highlight count: " + str(notTruncatedHighlightCount))
+        
         return truncatedHighlightCount
 
 
