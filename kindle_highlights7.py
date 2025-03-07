@@ -124,7 +124,8 @@ while aBook.getTruncatedHighlightCount() > 0:
     #Reloading should unlock highlights that were previously truncated
     try:
         #Select the book to reload it since a page refresh would load up the book at index 0.
-        aBook.select()
+        BROWSER.reload()
+        aBook.browser = BROWSER
         time.sleep(5)
         aBook.getSoup()
     except Exception as e:
