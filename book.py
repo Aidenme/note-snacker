@@ -221,13 +221,14 @@ class Book:
                 self.updateHighlightTruncated(highlight)
 
     def checkForTruncatedHighlights(self):
-        
-        for highlight in self.highlightList:
-            
+        truncatedHighlightCount = 0
+        for highlight in self.highlightList: 
             if highlight.truncated == True:
-                return True
-        
-        return False    
+                truncatedHighlightCount += 1
+        if truncatedHighlightCount > 0:
+            return True
+        else:
+            return False
 
 
 
