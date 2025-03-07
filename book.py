@@ -227,6 +227,7 @@ class Book:
         for highlight in self.highlightList: 
             if highlight.truncated == True:
                 truncatedHighlightCount += 1
+        print("Truncated highlight count: " + str(truncatedHighlightCount))
         return truncatedHighlightCount
 
 
