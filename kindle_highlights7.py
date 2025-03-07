@@ -17,7 +17,6 @@ BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, "lxml")
 
-
 # Gets the title, author, and button to press to open the book on the notebook page
 def getLibrary():
     # Need soup on init to get stuff on the side bar to create the book.
@@ -70,7 +69,23 @@ def signIn():
     button.click()
     time.sleep(2)
 
-
+def export(book):
+    if book.fileName in os.listdir(BOOK_STORAGE_FOLDER):
+    
+        #newHighlights are just-downloaded highlights that aren't in the html file.
+        newHighlights = book.getNewHighlights()
+    
+        if newHighlights == None:
+        
+            print("No new highlights found for stored book.")
+    
+        else:
+        
+            book.update(newHighlights)
+    else:
+    
+        book.make()
+    
 print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
@@ -125,6 +140,8 @@ if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
 else:
     
     aBook.make()
+
+export(aBook)
 
 #print(aBook.getFileName())
 
