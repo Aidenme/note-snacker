@@ -130,11 +130,13 @@ aBook.select()
 
 time.sleep(5)
 
-aBook.load()
+aBook.getSoup()
 
-if aBook.highlightCount == 0:
+if aBook.getHighlightCount() == 0:
     print("No online highlights found, exiting...")
     exit()
+else:
+    aBook.createHighlightList()
 
 aBook.checkColors()
 

@@ -36,15 +36,15 @@ class Book:
     def getSoup(self):
         self.soup = BeautifulSoup(self.browser.html, 'lxml')
 
-    def getHighlightCount(self, soup):
-            highlightDivs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
+    def getHighlightCount(self):
+            highlightDivs = self.soup.find_all('div', {'class': 'kp-notebook-row-separator'})
             highlightCount = len(highlightDivs) - 1 #subtract one because the first div is not a highlight
             print("getSoupHighlightCount Result:")
             print(highlightCount)
             return highlightCount
 
-    def createHighlightList(self, soup, browser):
-        divs = soup.find_all('div', {'class': 'kp-notebook-row-separator'})
+    def createHighlightList(self):
+        divs = self.soup.find_all('div', {'class': 'kp-notebook-row-separator'})
         print('Divs found on initial list creation:')
         print(len(divs))
         highlightList = []
@@ -52,18 +52,13 @@ class Book:
         for div in divs[1:]:
             if div.find('div', {'class': 'kp-notebook-highlight'}):
             
-                highlight = Highlight(div, browser)
+                highlight = Highlight(div, self.browser)
 
                 highlightList.append(highlight)
         
         return highlightList
 
-    def load(self):
-        self.getSoup()
-        self.highlightCount = self.getHighlightCount(self.soup)
-        self.highlightList = self.createHighlightList(self.soup, self.browser)
-
-    def getFileName(self): 
+    def getFileName(self):
         regxPattern = '[^A-Za-z0-9 ]+'
         cleanTitle = re.sub(regxPattern, '', self.title)
         cleanAuthor = re.sub(regxPattern, '', self.author)
