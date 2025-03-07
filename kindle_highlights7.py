@@ -94,7 +94,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[9]
+aBook = library[0]
 
 aBook.select()
 
@@ -107,8 +107,6 @@ if aBook.getHighlightCount() == 0:
     exit()
 else:
     aBook.createHighlightList()
-
-export(aBook)
 
 aBook.checkColors()
 
