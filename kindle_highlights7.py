@@ -138,8 +138,23 @@ if aBook.highlightCount == 0:
 
 aBook.checkColors()
 
+while aBook.checkForTruncatedHighlights == True:
+
+    #Deletes highlights that are not truncated
+    aBook.deleteCompleteHighlights()
+
+    #Reloading should unlock highlights that were previously truncated
+    BROWSER.reload()
+
+    #Finds the highlights that got untruncated
+    aBook.updateHighlightList()
+
+else:
+    print("No more truncated highlights detected.")
+
 if aBook.fileName in os.listdir(BOOK_STORAGE_FOLDER):
     
+    #newHighlights are just-downloaded highlights that aren't in the html file.
     newHighlights = aBook.getNewHighlights()
     
     if newHighlights == None:

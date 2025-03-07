@@ -225,10 +225,14 @@ class Book:
                 self.updateHighlightText(highlight)
                 self.updateHighlightTruncated(highlight)
 
-    def processHighlights(self):
-        self.deleteCompleteHighlights(self)
-        self.browser.reload()
-        self.updateHighlights(self)
+    def checkForTruncatedHighlights(self):
+        
+        for highlight in self.highlightList:
+            
+            if highlight.truncated == True:
+                return True
+        
+        return False    
 
 
 
