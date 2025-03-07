@@ -57,6 +57,7 @@ class Highlight:
         return highlightNote
     
     def getOptionsButton(self, browser):
+        print("getOptionsButton Ran")
         cleanId = self.id[len("highlight-") :]
         newId = "popover-" + cleanId
         optionsButton = browser.find_by_id(newId)

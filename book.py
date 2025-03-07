@@ -221,7 +221,8 @@ class Book:
         for highlight in self.highlightList:
             
             #When the page refreshes the options buttons need to be relinked
-            highlight.getOptionsButton(self.browser)
+            updatedOptionsButton = highlight.getOptionsButton(self.browser)
+            highlight.optionsButton = updatedOptionsButton
             
             if highlight.truncated == True:
                 self.updateHighlightText(highlight)
