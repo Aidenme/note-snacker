@@ -108,6 +108,9 @@ class Book:
 
         htmlFile.close()
         
+        #Note that this will include the truncated highlight alert text which will make it differ from the online highlight.
+        #This should not be a problem since truncated text was only getting stored for testing purposes, but it will
+        #be stored if you have to do an emergency export.
         for pTag in soup.find_all("p"):
             highlightTextList.append(pTag.get_text())
 
