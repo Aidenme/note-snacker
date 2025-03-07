@@ -113,27 +113,33 @@ aBook.checkColors()
 while aBook.getTruncatedHighlightCount() > 0:
 
     #Deletes highlights that are not truncated
-    #try:
-    aBook.deleteCompleteHighlights()
-    #except:
-        #print("An Error occured: Unable to delete all highlights!")
-        #export(aBook)
+    try:
+        aBook.deleteCompleteHighlights()
+    except Exception as e:
+        print("An Error occured: Unable to delete complete highlights")
+        print(e)
+        export(aBook)
+        sys.exit()
 
     #Reloading should unlock highlights that were previously truncated
     try:
         #Select the book to reload it since a page refresh would load up the book at index 0.
         aBook.select()
         aBook.getSoup()
-    except:
-        print("An error occured: Unable to update soup!")
+    except Exception as e:
+        print("An error occured: Unable to reload the book")
+        print(e)
         export(aBook)
+        sys.exit()
 
     #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.  
     try:
         aBook.updateHighlightList()
-    except:
-        print("An error occured: Unable to update Highlight List!")
+    except Exception as e:
+        print("An error occured: Unable to update highlight list")
+        print(e)
         export(aBook)
+        sys.exit()
 
 else:
     print("No more truncated highlights detected. Everything should be copied now!")
