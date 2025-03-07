@@ -210,6 +210,8 @@ class Book:
         
         for highlight in self.highlightList:
             if highlight.truncated == False:
+                print("Deleting highlight:")
+                print(highlight.text + "\n")
                 highlight.delete()
                 time.sleep(2)
 
