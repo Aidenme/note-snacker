@@ -127,6 +127,7 @@ while aBook.getTruncatedHighlightCount() > 0:
     try:
         #Select the book to reload it since a page refresh would load up the book at index 0.
         aBook.select()
+        time.sleep(5)
         aBook.getSoup()
     except Exception as e:
         print("An error occured: Unable to reload the book")
