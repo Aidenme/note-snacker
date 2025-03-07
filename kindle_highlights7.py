@@ -127,8 +127,7 @@ while aBook.checkForTruncatedHighlights == True:
         print("An error occured: Unable to update soup!")
         export(aBook)
 
-    #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.
-    
+    #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.  
     try:
         aBook.updateHighlightList()
     except:
@@ -139,63 +138,9 @@ else:
     print("No more truncated highlights detected. Everything should be copied now!")
     export(aBook)
 
-#print(aBook.getFileName())
+    #Clean up remaining highlights
+    aBook.deleteCompleteHighlights()
 
-#aBook.export()
+#BROWSER.quit()
 
-#aBook.getNewHighlights()
-
-sys.exit("Initial highlights copied, exiting...")
-
-# Does a handful of checks to make sure the highlight colors are correct in the book to avoid disasters.
-checkColors(test_book["highlights"])
-
-while True:
-    print("Main Loop Runs")
-
-    # Putting tries on everything that attempts to read data from the browser in case the internet goes down or the window gets closed. If something goes wrong all the work
-    # done so far is immediately exported so it's not just lost in RAM as the program crashes.
-    # Also I'm putting all of these try/except statements in this loop because it seems too complicated to get the book to print as is from within all these various functions.
-    try:
-        test_book = fillAllHighlights(test_book)
-    except:
-        print("An error occured")
-        exportToFile(test_book)
-
-    # Putting tries on everything that attempts to read data from the browser in case the internet goes down or the window gets closed.
-    try:
-        # fillAllHighlights() causes some highlights to be deleted so the page needs to be reloaded to unlock more highlights to copy.
-        BROWSER.reload()
-        print("Refreshing...")
-        time.sleep(5)
-        print("Refresh complete!")
-    except:
-        print("An error occured")
-        exportToFile(test_book)
-
-    # Putting tries on everything that attempts to read data from the browser in case the internet goes down or the window gets closed.
-    try:
-        # Getting the highlight count again since fillAllHighlights() has run and deleted some. Used later to check if highlights are still getting deleted/unlocked and if the program can continue.
-        newPageHighlightCount = getPageHighlightCount()
-    except:
-        print("An error occured")
-        exportToFile(test_book)
-
-    # Exit the loop if there are no highlights left to get. This will cause the export to run since it is directly outside the loop
-    if newPageHighlightCount == 0:
-        print("All Highlights copied!")
-        break
-
-    # Exits the loop if highlights are no longer able to be untruncated and deleted.
-    # This is how you tell if the deleting process is getting stuck on something or nothing more can get untruncated.
-    if newPageHighlightCount < startingPageHighlightCount:
-        startingPageHighlightCount = newPageHighlightCount
-    else:
-        print("Highlights did not decrease")
-        break
-
-exportToFile(test_book)
-
-print("done")
-
-# BROWSER.quit()
+sys.exit("Done!")
