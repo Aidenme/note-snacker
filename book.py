@@ -209,11 +209,12 @@ class Book:
     def deleteCompleteHighlights(self):
         
         for highlight in self.highlightList:
-            if highlight.truncated == False:
-                print("Deleting highlight:")
-                print(highlight.text + "\n")
-                highlight.delete()
-                time.sleep(2)
+            if highlight.deleted == False:
+                if highlight.truncated == False:
+                    print("Deleting highlight:")
+                    print(highlight.text + "\n")
+                    highlight.delete()
+                    time.sleep(2)
 
     def updateHighlights(self):
         

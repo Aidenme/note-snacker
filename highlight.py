@@ -85,5 +85,7 @@ class Highlight:
         #Clcking the confirm button deletes the highlight for good
         deleteConfirmButton.click()
 
+        self.deleted = True
+
 
 

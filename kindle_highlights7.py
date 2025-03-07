@@ -94,7 +94,7 @@ signIn()
 
 library = getLibrary()
 
-aBook = library[6]
+aBook = library[0]
 
 aBook.select()
 
@@ -110,20 +110,18 @@ else:
 
 aBook.checkColors()
 
-sys.exit()
-
 while aBook.getTruncatedHighlightCount() > 0:
 
     #Deletes highlights that are not truncated
-    try:
-        aBook.deleteCompleteHighlights()
-    except:
-        print("An Error occured: Unable to delete all highlights!")
-        export(aBook)
+    #try:
+    aBook.deleteCompleteHighlights()
+    #except:
+        #print("An Error occured: Unable to delete all highlights!")
+        #export(aBook)
 
     #Reloading should unlock highlights that were previously truncated
     try:
-        #Select the book to reload it. A page refresh would load up the book at index 0.
+        #Select the book to reload it since a page refresh would load up the book at index 0.
         aBook.select()
         aBook.getSoup()
     except:
@@ -142,6 +140,7 @@ else:
     export(aBook)
 
     #Clean up remaining highlights
+    print("Cleaning up remaining highlights...")
     aBook.deleteCompleteHighlights()
 
 #BROWSER.quit()
