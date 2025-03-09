@@ -59,6 +59,11 @@ class Book:
         self.highlightList = highlightList
 
     def getFileName(self):
+        print("Title:")
+        print(self.cleanTitle(self.title))
+        print("Author:")
+        print(self.author)
+
         regxPattern = '[^A-Za-z0-9 ]+'
         cleanTitle = re.sub(regxPattern, '', self.title)
         cleanAuthor = re.sub(regxPattern, '', self.author)
@@ -66,6 +71,21 @@ class Book:
         
         return fileName
 
+    def cleanTitle(self, title):
+        preColonText = title.split(':', 1)[0]
+
+        wordsList = []
+
+        for word in preColonText.split(' '):
+            if len(' '.join(wordsList)) < 41:
+                wordsList.append(word)
+            else:
+                break
+        
+        cleanTitle = ' '.join(wordsList)
+
+        return cleanTitle
+    
     def export(self, fileName, highlightList, exportFolder):
         mergeHighlights = False
         f = open(exportFolder + fileName , mode='a', encoding='utf-8', errors='replace')
