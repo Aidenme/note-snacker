@@ -227,6 +227,10 @@ class Book:
     def updateHighlightList(self):
         
         for highlight in self.highlightList:
+
+            #Makes this skip highlights that have already been deleted
+            if highlight.deleted == True:
+                continue
             
             #When the page refreshes the options buttons need to be relinked
             updatedOptionsButton = highlight.getOptionsButton(self.browser)
