@@ -59,32 +59,19 @@ class Book:
         self.highlightList = highlightList
 
     def getFileName(self):
-        print("Title:")
-        print(self.cleanTitle(self.title))
-        print("Author:")
-        print(self.author)
 
         regxPattern = '[^A-Za-z0-9 ]+'
-        cleanTitle = re.sub(regxPattern, '', self.title)
-        cleanAuthor = re.sub(regxPattern, '', self.author)
+        
+        #Removes characters that don't work in file names and shortens the title to 30 characters in total
+        cleanTitle = re.sub(regxPattern, '', self.title[:30])
+        
+        #Same as above, but also removed the 'By: ' text the kindle notebook puts in front of author names
+        cleanAuthor = re.sub(regxPattern, '', self.author[4:30])
         fileName = cleanTitle + " - " + cleanAuthor + ".html"
+
+        print(fileName)
         
         return fileName
-
-    def cleanTitle(self, title):
-        preColonText = title.split(':', 1)[0]
-
-        wordsList = []
-
-        for word in preColonText.split(' '):
-            if len(' '.join(wordsList)) < 41:
-                wordsList.append(word)
-            else:
-                break
-        
-        cleanTitle = ' '.join(wordsList)
-
-        return cleanTitle
     
     def export(self, fileName, highlightList, exportFolder):
         mergeHighlights = False
