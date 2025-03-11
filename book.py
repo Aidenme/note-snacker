@@ -68,8 +68,6 @@ class Book:
         #Same as above, but also removed the 'By: ' text the kindle notebook puts in front of author names
         cleanAuthor = re.sub(regxPattern, '', self.author[4:30])
         fileName = cleanTitle + " - " + cleanAuthor + ".html"
-
-        print(fileName)
         
         return fileName
     

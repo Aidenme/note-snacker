@@ -96,8 +96,6 @@ library = getLibrary()
 
 aBook = library[0]
 
-sys.exit()
-
 aBook.select()
 
 time.sleep(5)
