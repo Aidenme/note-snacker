@@ -1,0 +1,19 @@
+checkColors in book.py is the thing that blocks the rest of the program from running if the color check fails.
+
+I think this will all be a lot easier if I just have an "exporter" object that I send a list of highlights to. Then if there are problems with the highlights I can handle them there before the program keeps running.
+
+Keep in mind if you fix the colors later you have to make sure highlights that already exist don't revert the colors back in the "database" book file.
+
+CHECK COLORS BEFORE EXPORT 
+If it finds a problem it presents you with the highlight and gives you the option to change the highlight color. The problem with this is all the highlights will have already been deleted so it is hard for me to check.
+
+
+SET COLORS AFTER EXPORT
+
+JAVASCRIPT
+One idea I have is to just add some javascript functionality to change a highlight color and then when I do have the page refresh and redraw the lines. Can you use Javascript to permanently change something about an HTML page? I feel like it shouldn't be able to do that for security reasons.
+
+ANOTHER PROGRAM
+I could write a whole other program that checks the highlight colors and rewrites the HTML code to fix any mistakes. That would require the highlight color to be stored somewhere in the HTML code. That shouldn't be too hard though and I can use CSS to make it invisible to my copy/paste to SuperMemo. The Javascript I should add though is the ability to visually turn the highlight color on and off. I'd give each highlight its own div and change the background color. That way it would be easy for me to visually see what needs to be fixed. Also I should give each highlight a number that shows up when I do that. Then when the program runs even if it doesn't detect any errors I can issue a command like "change highlight #42 to yellow." The main drawback to this is I'm not sure how well I can use this with the current system of having the full book stored somewhere. Actually since doing this is going to change how I write out the HTML code the complete books aren't going to be compatible. I'm going to have to change how they work anyway. Maybe highlight checker needs to run before the merger into the main html file. That may be another object or program "merger". This is all better when I think about it anyway because it IS making everything more modular.
+
+
