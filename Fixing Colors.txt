@@ -1,3 +1,9 @@
+INCREMENTS:
+I really want to move everything over to an HTMLManger object, but currently the program fails too much. For now I just need to find a way to export and then be able to go in and manually fix the highlights myself. Once that works then I can make that process easier for myself by creating an HTMLManger object that will start doing those processess for me.
+1. Add a way to toggle the deletion of highlights on and off so I don't have to do that every time I export. That way I can start doing some tests.
+
+Disable delete:
+
 checkColors in book.py is the thing that blocks the rest of the program from running if the color check fails.
 
 I think this will all be a lot easier if I just have an "exporter" object that I send a list of highlights to. Then if there are problems with the highlights I can handle them there before the program keeps running.

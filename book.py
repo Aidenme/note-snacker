@@ -144,6 +144,8 @@ class Book:
         self.export(fileName= self.fileName, highlightList = newHighlights, exportFolder = config.NEW_HIGHLIGHT_FOLDER)
 
     def make(self):
+        #Since the appending will just create a new file if there is nothing to append to, this just exports twice. It appends
+        #to any books already in BOOK_STORAGE_FOLDER, but creates a new highlight in the NEW_HIGHLIGHT_FOLDER.
         self.export(self.fileName, self.highlightList, self.BOOK_STORAGE_FOLDER)
         self.export(self.fileName, self.highlightList, config.NEW_HIGHLIGHT_FOLDER)
 
