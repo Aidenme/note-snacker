@@ -13,6 +13,7 @@ AMZ_ACCOUNT = dotenv_values(".env")
 KINDLE_NOTEBOOK = config.KINDLE_NOTEBOOK
 BROWSER = Browser(BROWSER_NAME)
 BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
+ALLOW_HIGHLIGHT_DELETION = config.ALLOW_HIGHLIGHT_DELETION
 
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, "lxml")
@@ -109,6 +110,9 @@ else:
     aBook.createHighlightList()
 
 aBook.checkColors()
+
+if ALLOW_HIGHLIGHT_DELETION == False:
+    pass
 
 while aBook.getTruncatedHighlightCount() > 0:
 
