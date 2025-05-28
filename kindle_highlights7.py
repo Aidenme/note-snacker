@@ -4,7 +4,6 @@ from splinter import Browser
 from bs4 import BeautifulSoup
 from book import Book
 import sys
-import json
 import time
 import os
 
