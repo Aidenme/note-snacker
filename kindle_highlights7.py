@@ -3,6 +3,7 @@ from dotenv import dotenv_values
 from splinter import Browser
 from bs4 import BeautifulSoup
 from book import Book
+from bookfile import Bookfile
 import sys
 import time
 import os
@@ -90,6 +91,9 @@ print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
 
+localBook = Bookfile()
+exit()
+
 signIn()
 
 library = getLibrary()
@@ -107,6 +111,8 @@ if aBook.getHighlightCount() == 0:
     exit()
 else:
     aBook.createHighlightList()
+
+fileMaster = Filemanager()
 
 #aBook.checkColors()
 
