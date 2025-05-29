@@ -91,7 +91,6 @@ print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
 
-localBook = Bookfile()
 exit()
 
 signIn()
@@ -112,11 +111,10 @@ if aBook.getHighlightCount() == 0:
 else:
     aBook.createHighlightList()
 
-fileMaster = Filemanager()
-
 #aBook.checkColors()
 
 if DELETE_HIGHLIGHTS == False:
+    localBook = Bookfile(aBook)
     export(aBook)
     sys.exit("Done!")
 
