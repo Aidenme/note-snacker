@@ -91,8 +91,6 @@ print()
 print("Welcome to Note Snacker 7!")
 print("Now loading your selected browser, " + BROWSER_NAME + "...")
 
-exit()
-
 signIn()
 
 library = getLibrary()
