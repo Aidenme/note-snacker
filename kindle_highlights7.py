@@ -113,7 +113,7 @@ else:
 
 if DELETE_HIGHLIGHTS == False:
     localBook = Bookfile(aBook)
-    export(aBook)
+    #export(aBook)
     sys.exit("Done!")
 
 while aBook.getTruncatedHighlightCount() > 0:

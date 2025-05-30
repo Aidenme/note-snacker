@@ -11,7 +11,6 @@ class Book:
         self.author = author
         self.button = button
         self.browser = browser
-        self.fileName = self.getFileName()
         self.soup = None
         self.selected = False
         self.highlightCount = 0
@@ -57,52 +56,6 @@ class Book:
                 highlightList.append(highlight)
         
         self.highlightList = highlightList
-
-    def getFileName(self):
-
-        regxPattern = '[^A-Za-z0-9 ]+'
-        
-        #Removes characters that don't work in file names and shortens the title to 30 characters in total
-        cleanTitle = re.sub(regxPattern, '', self.title[:30])
-        
-        #Same as above, but also removed the 'By: ' text the kindle notebook puts in front of author names
-        cleanAuthor = re.sub(regxPattern, '', self.author[4:30])
-        fileName = cleanTitle + " - " + cleanAuthor + ".html"
-        
-        return fileName
-    
-    def export(self, fileName, highlightList, exportFolder):
-        mergeHighlights = False
-        f = open(exportFolder + fileName , mode='a', encoding='utf-8', errors='replace')
-
-        for highlight in highlightList:
-
-            #Toggle "part of a multi-part highlight" on and off
-            if highlight.color == 'Yellow':
-                mergeHighlights = not mergeHighlights
-
-            if highlight.truncated:
-                f.write('<p ' + config.TRUNCATED_HIGHLIGHT_STYLE + '>')
-            else:
-                f.write('<p>')
-
-            f.write(highlight.text)
-
-            f.write('</p>')
-
-            if highlight.note:
-                f.write('<h5>')
-
-                f.write(highlight.note)
-
-                f.write('</h5>')
-
-            if mergeHighlights == False:
-                f.write('<HR>')
-            else:
-                pass
-
-        f.close()
 
     def getLocalHighlightTextList(self):
         htmlFile = (open(self.BOOK_STORAGE_FOLDER + self.fileName , mode='r' , encoding='utf-8'))
