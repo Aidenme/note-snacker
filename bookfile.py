@@ -46,17 +46,17 @@ class Bookfile:
 
             f.write(highlight.text)
 
-            f.write('</p>')
+            f.write('</p>\n')
 
             if highlight.note:
                 f.write('<h5>')
 
                 f.write(highlight.note)
 
-                f.write('</h5>')
+                f.write('</h5>\n')
 
             if mergeHighlights == False:
-                f.write('<HR>')
+                f.write('<HR>\n')
             else:
                 pass
 
