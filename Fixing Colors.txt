@@ -2,6 +2,9 @@ CSS
 Could use Javascript to just change the linked CSS file.
 Could use Javascript to change the style of each element.
 
+Export happens
+Color checks run on the newly created HTML file. In fact color checker should be a new object that gets a html filepath and does the checks. If the check fails then it changes the HTML to include the visualize_color.css file. It tells you which highlights have the wrong color and asks you to fix it. After you do you tell it you fixed it. It runs again. Repeat until all the color checks are fixed. Note that if a file already exists and new html is getting added to it any previous existing notes need to NOT have the color class change in case the colors are wrong on the kindle site.
+
 INCREMENTS:
 I really want to move everything over to an HTMLManger object, but currently the program fails too much. For now I just need to find a way to export and then be able to go in and manually fix the highlights myself. Once that works then I can make that process easier for myself by creating an HTMLManger object that will start doing those processess for me.
 1. Add a way to toggle the deletion of highlights on and off so I don't have to do that every time I export. That way I can start doing some tests.
