@@ -40,9 +40,9 @@ class Bookfile:
                 mergeHighlights = not mergeHighlights
 
             if highlight.truncated:
-                f.write('<p ' + config.TRUNCATED_HIGHLIGHT_STYLE + '>')
+                f.write('<p class="' + highlight.color + ' truncated">')
             else:
-                f.write('<p>')
+                f.write('<p class="' + highlight.color + '">')
 
             f.write(highlight.text)
 

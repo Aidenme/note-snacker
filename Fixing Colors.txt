@@ -1,6 +1,11 @@
+CSS
+Could use Javascript to just change the linked CSS file.
+Could use Javascript to change the style of each element.
+
 INCREMENTS:
 I really want to move everything over to an HTMLManger object, but currently the program fails too much. For now I just need to find a way to export and then be able to go in and manually fix the highlights myself. Once that works then I can make that process easier for myself by creating an HTMLManger object that will start doing those processess for me.
 1. Add a way to toggle the deletion of highlights on and off so I don't have to do that every time I export. That way I can start doing some tests.
+2. Give each element a class that includes the highlight color.
 
 Filemanager manages an individal book's html file so it only needs to exist when the book file exists, but would it be better to have a bookfile object then instead of an entire "filemanager"? In that case "exporting" a book would actually just be the creation of a new bookfile object, which has an associated html file as part of itself.
 
