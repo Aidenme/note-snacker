@@ -1,3 +1,11 @@
+MERGE
+Create new html file, merge it into already existing HTML file. If you have to run it again how is it going to know where the highlights are supposed to go? 
+First run numbers all the highlights and that gets stored as the ID in the HTML file.
+Is it easier to send everything to the HTML file immediately and then just update the file as things get unlocked. 
+
+UPDATE DETECTOR
+Could check the run count and add some javacript that hides/displays based on run count. I may have to do that because if the thing keeps breaking I can't have it handled automatically. Or at the least it would be hard to do automatically. Think about it like this. The program takes kindle highlights and is using them to fill out the local HTML file. For NOW just get this working entirely with one file. It is easy for you to manually figure out what has already been added and delete it because of how the topics are displayed in SuperMemo.
+
 CSS
 Could use Javascript to just change the linked CSS file.
 Could use Javascript to change the style of each element.
