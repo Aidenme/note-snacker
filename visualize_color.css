@@ -1,0 +1,16 @@
+p {
+    border-left-style: solid;
+    padding-left: 10px;
+}
+
+.blue {
+    border-color: #2596be;
+}
+
+.yellow {
+    border-color: #f2e268;
+}
+
+.pink {
+    border-color: #fdc3f3;
+}

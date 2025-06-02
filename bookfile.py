@@ -5,7 +5,10 @@ import config
 class Bookfile:
     def __init__(self, book):
         self.book = book
+        self.header = self.getHeader()
+        #self.ender = self.getEnder()
         self.createBookfile(self.book)
+
 
     def getFileName(self, book):
         regxPattern = '[^A-Za-z0-9 ]+'
@@ -32,6 +35,7 @@ class Bookfile:
     def export(self, fileName, highlightList, exportFolder):
         mergeHighlights = False
         f = open(exportFolder + fileName , mode='a', encoding='utf-8', errors='replace')
+        f.write(self.header)
 
         for highlight in highlightList:
 
@@ -46,8 +50,6 @@ class Bookfile:
 
             f.write(highlight.text)
 
-            f.write('</p>\n')
-
             if highlight.note:
                 f.write('<h5>')
 
@@ -55,9 +57,21 @@ class Bookfile:
 
                 f.write('</h5>\n')
 
+            f.write('</p>\n')
+
             if mergeHighlights == False:
                 f.write('<HR>\n')
             else:
                 pass
 
         f.close()
+
+    def getHeader(self):
+        headerText = '''
+<html>
+<head>
+    <link rel="stylesheet" href="../visualize_color.css">
+</head>
+<body>
+'''
+        return headerText
