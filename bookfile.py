@@ -75,3 +75,6 @@ class Bookfile:
 <body>
 '''
         return headerText
+    
+    def updateBookfile(self, updatedBook):
+        pass

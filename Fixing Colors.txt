@@ -1,3 +1,17 @@
+BOOKFILE
+It is an interface. It gets created when a book needs to interface. That is after the highlight list is obtained for the first time.
+if bookfile doesn't exist
+	create the file based on the highlights obtained
+if bookfile does exist update the current file
+
+loop
+have the book do a pass over the highlights
+update the bookfile
+delete the untruncated highlights
+
+updating the bookfile.
+
+
 MERGE
 Create new html file, merge it into already existing HTML file. If you have to run it again how is it going to know where the highlights are supposed to go? 
 First run numbers all the highlights and that gets stored as the ID in the HTML file.
