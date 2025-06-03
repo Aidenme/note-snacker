@@ -1,3 +1,17 @@
+Book doesn't exist:
+get kindle list and localize it
+export it
+Boom, got my starting book file
+
+If book exists:
+get HTML list and localize it
+get kindle list and localize it
+	getting the kindle list is the whole process in book. If it fails part way you still get the kindle list and localize it
+
+For all highlights in the HTML list search for the same highlight in the kindle list. if any are found, pop them, but if the HTML highlight list is truncated, copy over untruncated text first and then pop it. If it is truncated don't copy it. Just pop it. After the local list completes the search just append whatever remains in the kindle list.
+
+at the very least every highlight that currently exists should be in the local book because that is the first thing done. Even if the program only partially runs and deletes highlights the local list will still be able to fill out any truncated highlights. Complete highlights won't search for any highlights. Once the end of that list gets reached whatever
+
 BOOKFILE
 It is an interface. It gets created when a book needs to interface. That is after the highlight list is obtained for the first time.
 if bookfile doesn't exist
@@ -18,11 +32,6 @@ updateLocalHighlights(bookHighlightList)
 Convert book highlights into HTML highlights (which will be the new method for exporting highlights. Compare those, update the html highlight text if it isn't truncated. Append new highlights to the end of the highlight list.
 The order will be maintained because any time a highlight doesn't exist it will be inserted into the HTML highlight list. Actually I'm just going to be creating a new highlight list that either takes from the local html highlights or the kindle highlights and appends them. If there aren't any local highlights then just the kindle highlights get appended.
 
-
-MERGE
-Create new html file, merge it into already existing HTML file. If you have to run it again how is it going to know where the highlights are supposed to go? 
-First run numbers all the highlights and that gets stored as the ID in the HTML file.
-Is it easier to send everything to the HTML file immediately and then just update the file as things get unlocked. 
 
 UPDATE DETECTOR
 Could check the run count and add some javacript that hides/displays based on run count. I may have to do that because if the thing keeps breaking I can't have it handled automatically. Or at the least it would be hard to do automatically. Think about it like this. The program takes kindle highlights and is using them to fill out the local HTML file. For NOW just get this working entirely with one file. It is easy for you to manually figure out what has already been added and delete it because of how the topics are displayed in SuperMemo.

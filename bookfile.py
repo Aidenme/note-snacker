@@ -7,12 +7,13 @@ class Bookfile:
     def __init__(self, book):
         self.book = book
         self.pathName = config.BOOK_STORAGE_FOLDER + self.getFileName(book)
-        self.kindleLocalHL = []
-        self.HTMLLocalHL = []
         self.header = self.getHeader()
-        #self.ender = self.getEnder()
         self.createBookfile(self.book)
-        self.HTMLHLtoLocalHL(self.pathName)
+        self.kindleLocalHL = self.kindleHLtoLocalHL(book.highlightList)
+        self.HTMLLocalHL = self.HTMLHLtoLocalHL(self.pathName)
+        #self.ender = self.getEnder()
+        self.localList = []
+        self.updateLocalList(self.kindleLocalHL, self.HTMLLocalHL)
 
 
     def getFileName(self, book):
@@ -87,14 +88,19 @@ class Bookfile:
     def updateBookfile(self, updatedBook):
         pass
 
-    def kindleHLtoLocalHL(self, bookHighlight):
-        localHighlight = {
-            'truncated': bookHighlight.truncated,
-            'color': bookHighlight.color,
-            'text': bookHighlight.text,
-            'note': bookHighlight.note
-        }
-        return localHighlight
+    def kindleHLtoLocalHL(self, bookHighlights):
+        kindleHighlights = []
+        for highlight in bookHighlights:
+            localHighlight = {
+                'truncated': highlight.truncated,
+                'color': highlight.color,
+                'text': highlight.text,
+                'note': highlight.note
+            }
+            
+            kindleHighlights.append(highlight)
+        
+        return kindleHighlights
     
     def HTMLHLtoLocalHL(self, filePath):
         localHighlights = []
@@ -116,4 +122,16 @@ class Bookfile:
 
             localHighlights.append(localHighlight)
 
-        print(localHighlights)
+        return localHighlights
+
+    def updateLocalList(self, kindleList, HTMLList):
+
+        for localHighlight in HTMLList:
+            if localHighlight['text'][:25] in kindleList['text'][:20]:
+                print('Found kindle highlight:')
+                print('Searched using\n')
+                print(localHighlight['text'][20])
+                print()
+                print("Found text:\n")
+                print(kindleList['text'])
+                print('\n')
