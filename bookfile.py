@@ -1,13 +1,18 @@
 import re
 import sys
 import config
+from bs4 import BeautifulSoup
 
 class Bookfile:
     def __init__(self, book):
         self.book = book
+        self.pathName = config.BOOK_STORAGE_FOLDER + self.getFileName(book)
+        self.kindleLocalHL = []
+        self.HTMLLocalHL = []
         self.header = self.getHeader()
         #self.ender = self.getEnder()
         self.createBookfile(self.book)
+        self.HTMLHLtoLocalHL(self.pathName)
 
 
     def getFileName(self, book):
@@ -78,3 +83,26 @@ class Bookfile:
     
     def updateBookfile(self, updatedBook):
         pass
+
+    def kindleHLtoLocalHL(self, bookHighlight):
+        localHighlight = {
+            "truncated": bookHighlight.truncated,
+            "color": bookHighlight.color,
+            "text": bookHighlight.text,
+            "note": bookHighlight.note
+        }
+        return localHighlight
+    
+    def HTMLHLtoLocalHL(self, filePath):
+
+        htmlFile = open(filePath, mode='r', encoding='utf-8')
+        
+        soup = BeautifulSoup(htmlFile, 'lxml')
+
+        for p in soup.findAll('p'):
+            localHighlight = {
+                "color": p.attrs['class'][0],
+                "text": p.text,
+                #"note": lambda a : p.find('h5')[0].text
+            }
+            print(localHighlight)

@@ -11,6 +11,13 @@ delete the untruncated highlights
 
 updating the bookfile.
 
+importHTMLHighlights
+updateLocalHighlights(bookHighlightList)
+	updates the already truncated highlights and
+
+Convert book highlights into HTML highlights (which will be the new method for exporting highlights. Compare those, update the html highlight text if it isn't truncated. Append new highlights to the end of the highlight list.
+The order will be maintained because any time a highlight doesn't exist it will be inserted into the HTML highlight list. Actually I'm just going to be creating a new highlight list that either takes from the local html highlights or the kindle highlights and appends them. If there aren't any local highlights then just the kindle highlights get appended.
+
 
 MERGE
 Create new html file, merge it into already existing HTML file. If you have to run it again how is it going to know where the highlights are supposed to go? 
