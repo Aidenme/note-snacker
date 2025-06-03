@@ -49,20 +49,23 @@ class Bookfile:
                 mergeHighlights = not mergeHighlights
 
             if highlight.truncated:
-                f.write('<p class="' + highlight.color + ' truncated">')
+                f.write('<div class="text ' + highlight.color + ' true">')
             else:
-                f.write('<p class="' + highlight.color + '">')
+                f.write('<div class="text ' + highlight.color + ' false">')
 
             f.write(highlight.text)
 
-            if highlight.note:
-                f.write('<h5>')
+            f.write('<div class="note">')
+
+            if highlight.note:    
 
                 f.write(highlight.note)
 
-                f.write('</h5>\n')
+            #Close note div
+            f.write('</div>\n')
 
-            f.write('</p>\n')
+            #Close the individual highlight's div
+            f.write('</div>\n')
 
             if mergeHighlights == False:
                 f.write('<HR>\n')
@@ -86,23 +89,31 @@ class Bookfile:
 
     def kindleHLtoLocalHL(self, bookHighlight):
         localHighlight = {
-            "truncated": bookHighlight.truncated,
-            "color": bookHighlight.color,
-            "text": bookHighlight.text,
-            "note": bookHighlight.note
+            'truncated': bookHighlight.truncated,
+            'color': bookHighlight.color,
+            'text': bookHighlight.text,
+            'note': bookHighlight.note
         }
         return localHighlight
     
     def HTMLHLtoLocalHL(self, filePath):
-
+        localHighlights = []
         htmlFile = open(filePath, mode='r', encoding='utf-8')
-        
         soup = BeautifulSoup(htmlFile, 'lxml')
+        htmlFile.close()
 
-        for p in soup.findAll('p'):
-            localHighlight = {
-                "color": p.attrs['class'][0],
-                "text": p.text,
-                #"note": lambda a : p.find('h5')[0].text
-            }
-            print(localHighlight)
+        for div in soup.findAll('div'):
+            
+            localHighlight = {}
+            
+            if div.attrs['class'][0] == 'text':
+                localHighlight['truncated'] = div.attrs['class'][2]
+                localHighlight['color'] = div.attrs['class'][1]
+                localHighlight['text'] = div.text
+            
+            if div.attrs['class'][0] == 'note':
+                localHighlight['note'] = div.text
+
+            localHighlights.append(localHighlight)
+
+        print(localHighlights)
