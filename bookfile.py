@@ -13,7 +13,8 @@ class Bookfile:
         self.HTMLLocalHL = self.HTMLHLtoLocalHL(self.pathName)
         #self.ender = self.getEnder()
         self.localList = []
-        self.updateLocalList(self.kindleLocalHL, self.HTMLLocalHL)
+        #self.updateLocalList(self.kindleLocalHL, self.HTMLLocalHL)
+        #self.compareLists(self.HTMLLocalHL, self.kindleLocalHL)
 
 
     def getFileName(self, book):
@@ -97,8 +98,10 @@ class Bookfile:
                 'text': highlight.text,
                 'note': highlight.note
             }
+            #print(localHighlight['text'])
+            #print('/n')
             
-            kindleHighlights.append(highlight)
+            kindleHighlights.append(localHighlight)
         
         return kindleHighlights
     
@@ -120,6 +123,9 @@ class Bookfile:
             if div.attrs['class'][0] == 'note':
                 localHighlight['note'] = div.text
 
+            print(localHighlight)
+            print()
+            
             localHighlights.append(localHighlight)
 
         return localHighlights
@@ -135,3 +141,19 @@ class Bookfile:
                 print("Found text:\n")
                 print(kindleList['text'])
                 print('\n')
+
+    def getRefText(self, text):
+        pass
+
+    def cleanTruncatedText(truncatedText):
+        pass
+
+    def compareLists(self, HTMLList, kindleList):
+        print("Local list length:")
+        print(len(HTMLList))
+        print("kindle list length:")
+        print(len(kindleList))
+        for dict in HTMLList:
+            print(dict)
+            print('')
+        print(HTMLList == kindleList)

@@ -1,3 +1,35 @@
+AVOID TASK ENGINES It’s natural to focus on taming the pile of tasks you’ve already built up. Equally effective containment strategies, however, can be found upstream in your workflow, before obligations are generated in the first place. The following such strategy, for example, can be surprisingly effective in reducing your task burden: When selecting new projects, assess your options by the number of
+
+The technicians
+
+If the text is the same up to "Some highlights have been hidden or truncated due to export limits
+
+if text without truncated text in HTML text we have a match!
+
+
+
+for anything in the HTML list that is truncated see if anything in the kindle list is not truncated. Easy enough. Compare truncated only with not truncated
+
+for ltext in HTML list
+	if truncated
+		for ktext in kindleHighlight
+			if lext in ktext
+				true (match found)
+				if kindle highlight truncated
+					true
+						pop
+					false
+						ltext = ktext
+						pop
+			else
+				pop
+
+	if untruncated
+		for ktext in kindlhighlight
+			if ktext in ltext pop
+			else do nothing because this is a new highlight
+				 
+
 Book doesn't exist:
 get kindle list and localize it
 export it
