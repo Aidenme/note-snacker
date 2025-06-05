@@ -111,7 +111,7 @@ class Bookfile:
         soup = BeautifulSoup(htmlFile, 'lxml')
         htmlFile.close()
 
-        for div in soup.findAll('div'):
+        for div in soup.findAll('div', {'class': 'text'}):
             
             localHighlight = {}
             
@@ -119,9 +119,7 @@ class Bookfile:
                 localHighlight['truncated'] = div.attrs['class'][2]
                 localHighlight['color'] = div.attrs['class'][1]
                 localHighlight['text'] = div.text
-            
-            if div.attrs['class'][0] == 'note':
-                localHighlight['note'] = div.text
+                localHighlight['note'] = div.find('div', {'class': 'note'}).text
 
             print(localHighlight)
             print()
