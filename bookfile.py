@@ -2,6 +2,7 @@ import re
 import sys
 import config
 from bs4 import BeautifulSoup
+from simpleHighlight import SimpleHighlight
 
 class Bookfile:
     def __init__(self, book):
@@ -14,7 +15,7 @@ class Bookfile:
         #self.ender = self.getEnder()
         self.localList = []
         #self.updateLocalList(self.kindleLocalHL, self.HTMLLocalHL)
-        #self.compareLists(self.HTMLLocalHL, self.kindleLocalHL)
+        self.compareLists(self.HTMLLocalHL, self.kindleLocalHL)
 
 
     def getFileName(self, book):
@@ -51,9 +52,9 @@ class Bookfile:
                 mergeHighlights = not mergeHighlights
 
             if highlight.truncated:
-                f.write('<div class="text ' + highlight.color + ' true">')
+                f.write('<div class="text ' + highlight.color + ' True">')
             else:
-                f.write('<div class="text ' + highlight.color + ' false">')
+                f.write('<div class="text ' + highlight.color + ' False">')
 
             f.write(highlight.text)
 
@@ -88,22 +89,14 @@ class Bookfile:
     
     def updateBookfile(self, updatedBook):
         pass
-
+    
     def kindleHLtoLocalHL(self, bookHighlights):
         kindleHighlights = []
         for highlight in bookHighlights:
-            localHighlight = {
-                'truncated': highlight.truncated,
-                'color': highlight.color,
-                'text': highlight.text,
-                'note': highlight.note
-            }
-            #print(localHighlight['text'])
-            #print('/n')
-            
-            kindleHighlights.append(localHighlight)
+            simpleHighlight = SimpleHighlight(highlight, 'kindle')
+            kindleHighlights.append(simpleHighlight)
         
-        return kindleHighlights
+        return kindleHighlights    
     
     def HTMLHLtoLocalHL(self, filePath):
         localHighlights = []
@@ -112,19 +105,8 @@ class Bookfile:
         htmlFile.close()
 
         for div in soup.findAll('div', {'class': 'text'}):
-            
-            localHighlight = {}
-            
-            if div.attrs['class'][0] == 'text':
-                localHighlight['truncated'] = div.attrs['class'][2]
-                localHighlight['color'] = div.attrs['class'][1]
-                localHighlight['text'] = div.text
-                localHighlight['note'] = div.find('div', {'class': 'note'}).text
-
-            print(localHighlight)
-            print()
-            
-            localHighlights.append(localHighlight)
+            simpleHighlight = SimpleHighlight(div, 'html') 
+            localHighlights.append(simpleHighlight)
 
         return localHighlights
 
@@ -151,7 +133,21 @@ class Bookfile:
         print(len(HTMLList))
         print("kindle list length:")
         print(len(kindleList))
-        for dict in HTMLList:
-            print(dict)
-            print('')
-        print(HTMLList == kindleList)
+        checkIndex = []
+        for i in range(len(HTMLList)):
+            print("HTML Simp:")
+            print(HTMLList[i].truncated)
+            print("Kindle Simp:")
+            print(kindleList[i].truncated)
+            print("Same data?:")
+            if HTMLList[i].color == kindleList[i].color:
+                print("True")
+            else:
+                print("False")
+                checkIndex.append(i)
+
+        print("Mismatch found at these indexes: ")
+        for i in checkIndex:
+            print(i)
+        
+
