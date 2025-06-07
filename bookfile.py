@@ -137,11 +137,11 @@ class Bookfile:
         for i in range(len(HTMLList)):
             print("**********COMPARING THESE HIGHLIGHTS**********")
             print("HTML Simp:")
-            print(HTMLList[i].text)
+            print(HTMLList[i].note)
             print("Kindle Simp:")
-            print(kindleList[i].text)
+            print(kindleList[i].note)
             print("Same data?:")
-            if HTMLList[i].text == kindleList[i].text:
+            if HTMLList[i].note == kindleList[i].note:
                 print("True")
             else:
                 print("False")

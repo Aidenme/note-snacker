@@ -21,4 +21,8 @@ class SimpleHighlight:
         self.truncated = eval(div.attrs['class'][2])
         self.color = div.attrs['class'][1]
         self.text = div.find('div', {'class': 'text'}).text
-        self.note = div.find('div', {'class': 'note'}).text
+        noteText = div.find('div', {'class': 'note'}).text
+        if noteText == '':
+            self.note = None
+        else:
+            self.note = noteText
