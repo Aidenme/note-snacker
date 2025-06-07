@@ -20,5 +20,5 @@ class SimpleHighlight:
     def createFromHTML(self, div):
         self.truncated = eval(div.attrs['class'][2])
         self.color = div.attrs['class'][1]
-        self.text = div.text
+        self.text = div.find('div', {'class': 'text'}).text
         self.note = div.find('div', {'class': 'note'}).text

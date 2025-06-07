@@ -52,22 +52,22 @@ class Bookfile:
                 mergeHighlights = not mergeHighlights
 
             if highlight.truncated:
-                f.write('<div class="text ' + highlight.color + ' True">')
+                f.write('<div class="highlight ' + highlight.color + ' True">\n')
             else:
-                f.write('<div class="text ' + highlight.color + ' False">')
-
+                f.write('<div class="highlight ' + highlight.color + ' False">\n')
+            
+            #Create the text div
+            f.write('\t<div class="text">')
             f.write(highlight.text)
-
-            f.write('<div class="note">')
-
-            if highlight.note:    
-
-                f.write(highlight.note)
-
-            #Close note div
             f.write('</div>\n')
 
-            #Close the individual highlight's div
+            #Create the note div
+            f.write('\t<div class="note">')
+            if highlight.note:    
+                f.write(highlight.note)
+            f.write('</div>\n')
+
+            #Entire highlight div
             f.write('</div>\n')
 
             if mergeHighlights == False:
@@ -104,8 +104,8 @@ class Bookfile:
         soup = BeautifulSoup(htmlFile, 'lxml')
         htmlFile.close()
 
-        for div in soup.findAll('div', {'class': 'text'}):
-            simpleHighlight = SimpleHighlight(div, 'html') 
+        for highlightDiv in soup.findAll('div', {'class': 'highlight'}):
+            simpleHighlight = SimpleHighlight(highlightDiv, 'html') 
             localHighlights.append(simpleHighlight)
 
         return localHighlights
@@ -135,16 +135,18 @@ class Bookfile:
         print(len(kindleList))
         checkIndex = []
         for i in range(len(HTMLList)):
+            print("**********COMPARING THESE HIGHLIGHTS**********")
             print("HTML Simp:")
-            print(HTMLList[i].truncated)
+            print(HTMLList[i].text)
             print("Kindle Simp:")
-            print(kindleList[i].truncated)
+            print(kindleList[i].text)
             print("Same data?:")
-            if HTMLList[i].color == kindleList[i].color:
+            if HTMLList[i].text == kindleList[i].text:
                 print("True")
             else:
                 print("False")
                 checkIndex.append(i)
+        print()
 
         print("Mismatch found at these indexes: ")
         for i in checkIndex:
