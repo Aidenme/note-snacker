@@ -22,7 +22,7 @@ class Bookfile:
         #self.ender = self.getEnder()
         self.localList = []
         #self.compareLists(self.HTMLSimpHL, self.kindleSimpHL)
-        self.updateLocalList()
+        self.updateBookfile()
 
 
     def getFileName(self, book):
@@ -39,7 +39,10 @@ class Bookfile:
         
         return fileName
     
-    
+    def updateBookfile(self):
+        self.localList = self.updateLocalList()
+        self.export(self.pathName, self.localList)
+
     def importHTMLFile(self, pathName):
         self.HTMLSimpHL = self.HTMLHLtoSimpHL(pathName)
 
@@ -98,9 +101,6 @@ class Bookfile:
 '''
         return headerText
     
-    def updateBookfile(self, updatedBook):
-        pass
-    
     def kindleHLtoSimpHL(self, bookHighlights):
         kindleHighlights = []
         for highlight in bookHighlights:
@@ -151,8 +151,7 @@ class Bookfile:
         for kindleHL in kindleSimple:
             mergedList.append(kindleHL)
 
-        for simp in mergedList:
-            simp.print()
+        return mergedList
 
     def getRefText(self, text):
         pass

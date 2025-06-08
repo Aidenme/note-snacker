@@ -1,6 +1,7 @@
-.text {
-    border-left-style: solid;
-    padding-left: 10px;
+.highlight {
+    border-style: solid;
+    padding: 5px;
+    margin: 10px;
 }
 
 .blue {
