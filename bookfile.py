@@ -7,15 +7,22 @@ from simpleHighlight import SimpleHighlight
 class Bookfile:
     def __init__(self, book):
         self.book = book
-        self.pathName = config.BOOK_STORAGE_FOLDER + self.getFileName(book)
+        self.fileName = self.getFileName(book)
+        self.pathName = config.BOOK_STORAGE_FOLDER + self.fileName
         self.header = self.getHeader()
-        self.createBookfile(self.book)
-        self.kindleLocalHL = self.kindleHLtoLocalHL(book.highlightList)
-        self.HTMLLocalHL = self.HTMLHLtoLocalHL(self.pathName)
+        self.kindleSimpHL = self.kindleHLtoSimpHL(book.highlightList)
+        self.HTMLSimpHL = []
+        try:
+            print("Importing a local book...")
+            self.importHTMLFile(self.pathName)
+        except:
+            print("Could not find a local book. Running first time creation instead...")
+            self.createBookfile(self.pathName)
+            self.HTMLSimpHL = self.HTMLHLtoSimpHL(self.pathName)
         #self.ender = self.getEnder()
         self.localList = []
-        #self.updateLocalList(self.kindleLocalHL, self.HTMLLocalHL)
-        self.compareLists(self.HTMLLocalHL, self.kindleLocalHL)
+        #self.compareLists(self.HTMLSimpHL, self.kindleSimpHL)
+        self.updateLocalList()
 
 
     def getFileName(self, book):
@@ -31,18 +38,22 @@ class Bookfile:
         print(fileName)
         
         return fileName
+    
+    
+    def importHTMLFile(self, pathName):
+        self.HTMLSimpHL = self.HTMLHLtoSimpHL(pathName)
 
-    def createBookfile(self, book):
+    def createBookfile(self, pathName):
         
         #CODING QUESTION: Modularity wise when I create a book I should just create the file name directly from the book I think.
         #On the other hand I don't want to have to do that again when I have to reference the book again. Actually, I'm just going to
         #Have to recreate the filename from the book anyway to tie this reference to the local html file again after the program closes.
         #The solution then is to just have the filename get generated from the book each time and not necessarily store it as a class variable.
-        self.export(self.getFileName(book), book.highlightList, config.BOOK_STORAGE_FOLDER)
+        self.export(pathName, self.kindleSimpHL)
 
-    def export(self, fileName, highlightList, exportFolder):
+    def export(self, pathName, highlightList):
         mergeHighlights = False
-        f = open(exportFolder + fileName , mode='a', encoding='utf-8', errors='replace')
+        f = open(pathName , mode='w', encoding='utf-8', errors='replace')
         f.write(self.header)
 
         for highlight in highlightList:
@@ -90,7 +101,7 @@ class Bookfile:
     def updateBookfile(self, updatedBook):
         pass
     
-    def kindleHLtoLocalHL(self, bookHighlights):
+    def kindleHLtoSimpHL(self, bookHighlights):
         kindleHighlights = []
         for highlight in bookHighlights:
             simpleHighlight = SimpleHighlight(highlight, 'kindle')
@@ -98,7 +109,7 @@ class Bookfile:
         
         return kindleHighlights    
     
-    def HTMLHLtoLocalHL(self, filePath):
+    def HTMLHLtoSimpHL(self, filePath):
         localHighlights = []
         htmlFile = open(filePath, mode='r', encoding='utf-8')
         soup = BeautifulSoup(htmlFile, 'lxml')
@@ -110,17 +121,38 @@ class Bookfile:
 
         return localHighlights
 
-    def updateLocalList(self, kindleList, HTMLList):
+    def updateLocalList(self):
+        HTMLSimple = self.HTMLSimpHL
+        kindleSimple = self.kindleSimpHL
+        htmlTextList = []
+        kindleTextList = []
+        mergedList = []
 
-        for localHighlight in HTMLList:
-            if localHighlight['text'][:25] in kindleList['text'][:20]:
-                print('Found kindle highlight:')
-                print('Searched using\n')
-                print(localHighlight['text'][20])
-                print()
-                print("Found text:\n")
-                print(kindleList['text'])
-                print('\n')
+        for localHL in HTMLSimple:
+            
+            #Remove any complete local highlights from the kindle list
+            if localHL.truncated == False:
+                for i, kindleHL in enumerate(kindleSimple):
+                    if localHL.text in kindleHL.text:
+                        kindleSimple.pop(i)
+                mergedList.append(localHL)
+           
+            if localHL.truncated == True:
+                #See if there is an untruncated version of the text among the kindle highlights
+                for i, kindleHL in enumerate(kindleSimple):
+                    if localHL.text in kindleHL.text:
+                        #Match located! Now see if it is untruncated
+                        if kindleHL.truncated == True:
+                            kindleSimple.pop(i)
+                        if kindleHL.truncated == False:
+                            mergedList.append(localHL)
+        
+        #Add any new highlights to the merged list
+        for kindleHL in kindleSimple:
+            mergedList.append(kindleHL)
+
+        for simp in mergedList:
+            simp.print()
 
     def getRefText(self, text):
         pass
@@ -128,6 +160,7 @@ class Bookfile:
     def cleanTruncatedText(truncatedText):
         pass
 
+    #This is just for testing to make sure when I convert a local and kindle highlight they end up with the exact same data.
     def compareLists(self, HTMLList, kindleList):
         print("Local list length:")
         print(len(HTMLList))
@@ -151,5 +184,6 @@ class Bookfile:
         print("Mismatch found at these indexes: ")
         for i in checkIndex:
             print(i)
+        print("End compareLists")
         
 

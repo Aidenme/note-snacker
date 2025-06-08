@@ -10,6 +10,20 @@ class SimpleHighlight:
         self.color
         self.text
         self.note
+
+    def print(self):
+        print()
+        print("Simple Highlight:")
+        print("Truncated?")
+        print(self.truncated)
+        print("Color:")
+        print(self.color)
+        print("Text:")
+        print(self.text)
+        print("Note:")
+        print(self.note)
+        print("End highlight\n")
+
     
     def createFromKindleHL(self, kindleHighlight):
         self.color = kindleHighlight.color
