@@ -14,6 +14,8 @@ KINDLE_NOTEBOOK = config.KINDLE_NOTEBOOK
 BROWSER = Browser(BROWSER_NAME)
 BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 DELETE_HIGHLIGHTS = config.DELETE_HIGHLIGHTS
+#MAX_PASSES = config.MAX_PASSES
+COUNT_PASSES = config.COUNT_PASSES
 
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, "lxml")
@@ -109,14 +111,19 @@ if aBook.getHighlightCount() == 0:
 else:
     aBook.createHighlightList()
 
-#aBook.checkColors()
+localBook = Bookfile(aBook)
 
 if DELETE_HIGHLIGHTS == False:
-    localBook = Bookfile(aBook)
-    #export(aBook)
+    localBook.updateBookfile()
     sys.exit("Done!")
 
-while aBook.getTruncatedHighlightCount() > 0:
+if COUNT_PASSES == True:
+    MAX_PASSES = config.MAX_PASSES
+else:
+    MAX_PASSES = 1
+
+passCount = 0
+while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
 
     #Deletes highlights that are not truncated
     try:
@@ -148,6 +155,10 @@ while aBook.getTruncatedHighlightCount() > 0:
         print(e)
         export(aBook)
         sys.exit()
+
+    if COUNT_PASSES == True:
+        passCount += 1
+        print("Total passes: " + str(passCount)) 
 
 else:
     print("No more truncated highlights detected. Everything should be copied now!")

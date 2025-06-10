@@ -18,12 +18,8 @@ class Bookfile:
         except:
             print("Could not find a local book. Running first time creation instead...")
             self.createBookfile(self.pathName)
-            self.HTMLSimpHL = self.HTMLHLtoSimpHL(self.pathName)
         #self.ender = self.getEnder()
         self.localList = []
-        #self.compareLists(self.HTMLSimpHL, self.kindleSimpHL)
-        self.updateBookfile()
-
 
     def getFileName(self, book):
         regxPattern = '[^A-Za-z0-9 ]+'
@@ -45,14 +41,14 @@ class Bookfile:
 
     def importHTMLFile(self, pathName):
         self.HTMLSimpHL = self.HTMLHLtoSimpHL(pathName)
+        print("Book successfully imported")
 
     def createBookfile(self, pathName):
-        
-        #CODING QUESTION: Modularity wise when I create a book I should just create the file name directly from the book I think.
-        #On the other hand I don't want to have to do that again when I have to reference the book again. Actually, I'm just going to
-        #Have to recreate the filename from the book anyway to tie this reference to the local html file again after the program closes.
-        #The solution then is to just have the filename get generated from the book each time and not necessarily store it as a class variable.
+        print("Creating local book...")
         self.export(pathName, self.kindleSimpHL)
+        print("Local book created")
+        print("Importing local book...")
+        self.importHTMLFile(pathName)
 
     def export(self, pathName, highlightList):
         mergeHighlights = False
@@ -124,8 +120,6 @@ class Bookfile:
     def updateLocalList(self):
         HTMLSimple = self.HTMLSimpHL
         kindleSimple = self.kindleSimpHL
-        htmlTextList = []
-        kindleTextList = []
         mergedList = []
 
         for localHL in HTMLSimple:
@@ -152,12 +146,6 @@ class Bookfile:
             mergedList.append(kindleHL)
 
         return mergedList
-
-    def getRefText(self, text):
-        pass
-
-    def cleanTruncatedText(truncatedText):
-        pass
 
     #This is just for testing to make sure when I convert a local and kindle highlight they end up with the exact same data.
     def compareLists(self, HTMLList, kindleList):
