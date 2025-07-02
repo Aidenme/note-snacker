@@ -10,13 +10,15 @@ class Bookfile:
         self.fileName = self.getFileName(book)
         self.pathName = config.BOOK_STORAGE_FOLDER + self.fileName
         self.header = self.getHeader()
-        self.kindleSimpHL = self.kindleHLtoSimpHL(book.highlightList)
+        self.kindleSimpHL = []
         self.HTMLSimpHL = []
+        self.importKindle(book.highlightList)
         try:
             print("Importing a local book...")
             self.importHTMLFile(self.pathName)
         except:
             print("Could not find a local book. Running first time creation instead...")
+            #This requires kindleSimpHL to exist (Can I just make that one of the arguments sent then?)
             self.createBookfile(self.pathName)
         #self.ender = self.getEnder()
         self.localList = []
@@ -38,10 +40,6 @@ class Bookfile:
     def updateBookfile(self):
         self.localList = self.updateLocalList()
         self.export(self.pathName, self.localList)
-
-    def importHTMLFile(self, pathName):
-        self.HTMLSimpHL = self.HTMLHLtoSimpHL(pathName)
-        print("Book successfully imported")
 
     def createBookfile(self, pathName):
         print("Creating local book...")
@@ -97,15 +95,16 @@ class Bookfile:
 '''
         return headerText
     
-    def kindleHLtoSimpHL(self, bookHighlights):
+    def importKindle(self, bookHighlights):
+        print("Importing kindle highlights")
         kindleHighlights = []
         for highlight in bookHighlights:
             simpleHighlight = SimpleHighlight(highlight, 'kindle')
             kindleHighlights.append(simpleHighlight)
         
-        return kindleHighlights    
+        self.kindleSimpHL = kindleHighlights
     
-    def HTMLHLtoSimpHL(self, filePath):
+    def importHTMLFile(self, filePath):
         localHighlights = []
         htmlFile = open(filePath, mode='r', encoding='utf-8')
         soup = BeautifulSoup(htmlFile, 'lxml')
@@ -115,7 +114,7 @@ class Bookfile:
             simpleHighlight = SimpleHighlight(highlightDiv, 'html') 
             localHighlights.append(simpleHighlight)
 
-        return localHighlights
+        self.HTMLSimpHL = localHighlights
 
     def updateLocalList(self):
         HTMLSimple = self.HTMLSimpHL

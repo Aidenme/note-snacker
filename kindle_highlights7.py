@@ -131,7 +131,7 @@ while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
     except Exception as e:
         print("An Error occured: Unable to delete complete highlights")
         print(e)
-        export(aBook)
+        localBook.updateBookfile()
         sys.exit()
 
     #Reloading should unlock highlights that were previously truncated
@@ -141,10 +141,11 @@ while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
         aBook.browser = BROWSER
         time.sleep(5)
         aBook.getSoup()
+        localBook = Bookfile(aBook)
     except Exception as e:
         print("An error occured: Unable to reload the book")
         print(e)
-        export(aBook)
+        localBook.updateBookfile()
         sys.exit()
 
     #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.  
@@ -153,7 +154,7 @@ while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
     except Exception as e:
         print("An error occured: Unable to update highlight list")
         print(e)
-        export(aBook)
+        localBook.updateBookfile()
         sys.exit()
 
     if COUNT_PASSES == True:
