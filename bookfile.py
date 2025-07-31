@@ -104,6 +104,7 @@ class Bookfile:
         
         self.kindleSimpHL = kindleHighlights
     
+    #Imports all the highlights found in the local book file
     def importHTMLFile(self, filePath):
         localHighlights = []
         htmlFile = open(filePath, mode='r', encoding='utf-8')
@@ -123,7 +124,7 @@ class Bookfile:
 
         for localHL in HTMLSimple:
             
-            #Remove any complete local highlights from the kindle list
+            #Remove any complete local highlights from the kindle list because they don't need to be touched.
             if localHL.truncated == False:
                 for i, kindleHL in enumerate(kindleSimple):
                     if localHL.text in kindleHL.text:
@@ -131,7 +132,7 @@ class Bookfile:
                 mergedList.append(localHL)
            
             if localHL.truncated == True:
-                #See if there is an untruncated version of the text among the kindle highlights
+                #See if there is an untruncated version of the text among the kindle highlights so you can update the truncated local text.
                 for i, kindleHL in enumerate(kindleSimple):
                     if localHL.text in kindleHL.text:
                         #Match located! Now see if it is untruncated

@@ -162,8 +162,7 @@ while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
         print("Total passes: " + str(passCount)) 
 
 else:
-    print("No more truncated highlights detected. Everything should be copied now!")
-    export(aBook)
+    localBook.updateBookfile()
 
     #Clean up remaining highlights
     print("Cleaning up remaining highlights...")

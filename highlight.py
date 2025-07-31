@@ -80,7 +80,7 @@ class Highlight:
         
         #You'll be asked to confirm deleting the highlight
         deleteConfirmButton = self.browser.find_by_xpath(
-        "//html/body/div[4]/div/div/div[2]/span[2]/span/span/input"
+        "//html/body/div[@class='a-modal-scroller a-declarative']/div/div/div[2]/span[2]/span/span/input"
         )
 
         #Clcking the confirm button deletes the highlight for good
