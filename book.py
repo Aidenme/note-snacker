@@ -25,6 +25,12 @@ class Book:
         self.selected = True
         time.sleep(5)
         self.soup = BeautifulSoup(self.browser.html, 'lxml')
+        
+        if self.getHighlightCount() == 0:
+            print("No online highlights found, exiting...")
+            exit()
+        else:
+            self.createHighlightList()
 
     def checkSoup(self):
         if self.soup == None:

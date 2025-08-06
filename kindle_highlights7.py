@@ -43,13 +43,13 @@ def getLibrary():
 def pickBook(library):
 
     for index, book in enumerate(library):
-        print(str(index + 1) + "\n" + book["title"] + "\n")
+        print(str(index + 1) + "\n" + book.title + "\n")
 
     bookLibraryIndex = (
         int(input("Enter index number of the book to extract notes from:")) - 1
     )
 
-    print(library[bookLibraryIndex]["title"])
+    print(library[bookLibraryIndex].title)
 
     return bookLibraryIndex
 
@@ -96,12 +96,6 @@ BOOK_LIBRARY_INDEX = pickBook(library)
 aBook = library[BOOK_LIBRARY_INDEX]
 
 aBook.select()
-
-if aBook.getHighlightCount() == 0:
-    print("No online highlights found, exiting...")
-    exit()
-else:
-    aBook.createHighlightList()
 
 localBook = Bookfile(aBook)
 
