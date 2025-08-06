@@ -13,3 +13,6 @@
 # Ignore any of the old exports. I don't want to violate copyright by letting these html files get to the internet. Once I get the new database system setup I'll just move this into the Old folder, but I think the current system uses this so I don't wanna mess with it for now.
 **/Exports
 
+# Ignore _pycache_. These let python compile only newly written code instead of having to redo it every time. Not important to put on git and they've caused conficts in my merges.
+**/__pycache__
+

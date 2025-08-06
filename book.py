@@ -23,6 +23,14 @@ class Book:
     def select(self):
         self.button.click()
         self.selected = True
+        time.sleep(5)
+        self.soup = BeautifulSoup(self.browser.html, 'lxml')
+        
+        if self.getHighlightCount() == 0:
+            print("No online highlights found, exiting...")
+            exit()
+        else:
+            self.createHighlightList()
 
     def checkSoup(self):
         if self.soup == None:
@@ -31,9 +39,6 @@ class Book:
         else:
             print("Book has its soup!")
             return True
-
-    def getSoup(self):
-        self.soup = BeautifulSoup(self.browser.html, 'lxml')
 
     def getHighlightCount(self):
             highlightDivs = self.soup.find_all('div', {'class': 'kp-notebook-row-separator'})
