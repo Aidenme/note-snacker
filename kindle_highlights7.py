@@ -16,6 +16,7 @@ BOOK_STORAGE_FOLDER = config.BOOK_STORAGE_FOLDER
 DELETE_HIGHLIGHTS = config.DELETE_HIGHLIGHTS
 #MAX_PASSES = config.MAX_PASSES
 COUNT_PASSES = config.COUNT_PASSES
+BOOK_LIBRARY_INDEX = 0
 
 def setSoup(book):
     book.soup = BeautifulSoup(BROWSER.html, "lxml")
@@ -39,9 +40,7 @@ def getLibrary():
 
 
 # Lets you pick a book out of all books
-def pickBook():
-
-    library = getLibrary()
+def pickBook(library):
 
     for index, book in enumerate(library):
         print(str(index + 1) + "\n" + book["title"] + "\n")
@@ -51,12 +50,8 @@ def pickBook():
     )
 
     print(library[bookLibraryIndex]["title"])
-    print("Loading Book...")
-    library[bookLibraryIndex]["button"].click()
-    # Wait for the page to load. It can take a while on pages with tons of highlights and not
-    # Starting off with the right count can cause lots of issues.
-    time.sleep(5)
-    print("Book loaded")
+
+    return bookLibraryIndex
 
 
 # Handles signing into the kindle notebook website
@@ -96,14 +91,11 @@ print("Now loading your selected browser, " + BROWSER_NAME + "...")
 signIn()
 
 library = getLibrary()
+BOOK_LIBRARY_INDEX = pickBook(library)
 
-aBook = library[0]
+aBook = library[BOOK_LIBRARY_INDEX]
 
 aBook.select()
-
-time.sleep(5)
-
-aBook.getSoup()
 
 if aBook.getHighlightCount() == 0:
     print("No online highlights found, exiting...")
@@ -138,9 +130,10 @@ while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
     try:
         #Select the book to reload it since a page refresh would load up the book at index 0.
         BROWSER.reload()
-        aBook.browser = BROWSER
         time.sleep(5)
-        aBook.getSoup()
+        library = getLibrary()
+        aBook = library[BOOK_LIBRARY_INDEX]
+        aBook.select()
         localBook = Bookfile(aBook)
     except Exception as e:
         print("An error occured: Unable to reload the book")
