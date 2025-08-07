@@ -124,10 +124,11 @@ class Bookfile:
 
         for localHL in HTMLSimple:
             
-            #Remove any complete local highlights from the kindle list because they don't need to be touched.
+            #If a local highlight is completed it doesn't need to be updated from the kindle list in any case. 
             if localHL.truncated == False:
                 for i, kindleHL in enumerate(kindleSimple):
                     if localHL.text in kindleHL.text:
+                        #This shrinks the kindle list so I don't have to search through as many highlights to find matches later.
                         kindleSimple.pop(i)
                 mergedList.append(localHL)
            
@@ -136,10 +137,12 @@ class Bookfile:
                 for i, kindleHL in enumerate(kindleSimple):
                     if localHL.text in kindleHL.text:
                         #Match located! Now see if it is untruncated
+                        if kindleHL.truncated == False:
+                            mergedList.append(kindleSimple[i])
                         if kindleHL.truncated == True:
                             kindleSimple.pop(i)
-                        if kindleHL.truncated == False:
                             mergedList.append(localHL)
+
         
         #Add any new highlights to the merged list
         for kindleHL in kindleSimple:
