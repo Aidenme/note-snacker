@@ -144,6 +144,8 @@ class Bookfile:
             print("Local book file does NOT exist. Creating one from found online highlights...")
             self.export(pathName, kindleHighlights)
 
+    def updateKindleList(self, updatedOnlineBook):
+        self.kindleSimpHL = self.importKindle(updatedOnlineBook.highlightList)
 
 
 

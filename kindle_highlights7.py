@@ -111,6 +111,8 @@ else:
 passCount = 0
 while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
 
+    localBook.updateBookfile()
+    
     #Deletes highlights that are not truncated
     try:
         aBook.deleteCompleteHighlights()
@@ -138,6 +140,7 @@ while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
     #Finds the highlights that got untruncated. Updates their text and truncated status to untruncated.  
     try:
         aBook.updateHighlightList()
+        localBook.updateKindleList(aBook)
     except Exception as e:
         print("An error occured: Unable to update highlight list")
         print(e)
@@ -146,7 +149,7 @@ while aBook.getTruncatedHighlightCount() > 0 and passCount < MAX_PASSES:
 
     if COUNT_PASSES == True:
         passCount += 1
-        print("Total passes: " + str(passCount)) 
+        print("Total passes: " + str(passCount))
 
 else:
     localBook.updateBookfile()
