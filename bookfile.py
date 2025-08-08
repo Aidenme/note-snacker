@@ -1,5 +1,6 @@
 import re
 import sys
+import os
 import config
 from bs4 import BeautifulSoup
 from simpleHighlight import SimpleHighlight
@@ -10,17 +11,9 @@ class Bookfile:
         self.fileName = self.getFileName(book)
         self.pathName = config.BOOK_STORAGE_FOLDER + self.fileName
         self.header = self.getHeader()
-        self.kindleSimpHL = []
-        self.HTMLSimpHL = []
-        self.importKindle(book.highlightList)
-        try:
-            print("Importing a local book...")
-            self.importHTMLFile(self.pathName)
-        except:
-            print("Could not find a local book. Running first time creation instead...")
-            #This requires kindleSimpHL to exist (Can I just make that one of the arguments sent then?)
-            self.createBookfile(self.pathName)
-        #self.ender = self.getEnder()
+        self.kindleSimpHL = self.importKindle(book.highlightList)
+        self.setBookfile(self.pathName, self.kindleSimpHL)
+        self.HTMLSimpHL = self.importHTMLFile(self.pathName)
         self.localList = []
 
     def getFileName(self, book):
@@ -40,13 +33,6 @@ class Bookfile:
     def updateBookfile(self):
         self.localList = self.updateLocalList()
         self.export(self.pathName, self.localList)
-
-    def createBookfile(self, pathName):
-        print("Creating local book...")
-        self.export(pathName, self.kindleSimpHL)
-        print("Local book created")
-        print("Importing local book...")
-        self.importHTMLFile(pathName)
 
     def export(self, pathName, highlightList):
         mergeHighlights = False
@@ -102,7 +88,7 @@ class Bookfile:
             simpleHighlight = SimpleHighlight(highlight, 'kindle')
             kindleHighlights.append(simpleHighlight)
         
-        self.kindleSimpHL = kindleHighlights
+        return kindleHighlights
     
     #Imports all the highlights found in the local book file
     def importHTMLFile(self, filePath):
@@ -115,7 +101,7 @@ class Bookfile:
             simpleHighlight = SimpleHighlight(highlightDiv, 'html') 
             localHighlights.append(simpleHighlight)
 
-        self.HTMLSimpHL = localHighlights
+        return localHighlights
 
     def updateLocalList(self):
         HTMLSimple = self.HTMLSimpHL
@@ -149,6 +135,17 @@ class Bookfile:
             mergedList.append(kindleHL)
 
         return mergedList
+    
+    def setBookfile(self, pathName, kindleHighlights):
+
+        if os.path.isfile(pathName):
+            print("Local book file found.")
+        else:
+            print("Local book file does NOT exist. Creating one from found online highlights...")
+            self.export(pathName, kindleHighlights)
+
+
+
 
     #This is just for testing to make sure when I convert a local and kindle highlight they end up with the exact same data.
     def compareLists(self, HTMLList, kindleList):
