@@ -2,6 +2,7 @@ import re
 import sys
 import os
 import config
+import htmlparts
 from bs4 import BeautifulSoup
 from simpleHighlight import SimpleHighlight
 
@@ -10,7 +11,8 @@ class Bookfile:
         self.book = book
         self.fileName = self.getFileName(book)
         self.pathName = config.BOOK_STORAGE_FOLDER + self.fileName
-        self.header = self.getHeader()
+        self.header = htmlparts.HEADER_TEXT
+        self.ender = self.getEnder()
         self.kindleSimpHL = self.importKindle(book.highlightList)
         self.setBookfile(self.pathName, self.kindleSimpHL)
         self.HTMLSimpHL = self.importHTMLFile(self.pathName)
@@ -37,7 +39,7 @@ class Bookfile:
     def export(self, pathName, highlightList):
         mergeHighlights = False
         f = open(pathName , mode='w', encoding='utf-8', errors='replace')
-        f.write(self.header)
+        f.write(htmlparts.HEADER_TEXT)
 
         for highlight in highlightList:
 
@@ -68,18 +70,9 @@ class Bookfile:
                 f.write('<HR>\n')
             else:
                 pass
-
+        
+        f.write(htmlparts.ENDER_TEXT)
         f.close()
-
-    def getHeader(self):
-        headerText = '''
-<html>
-<head>
-    <link rel="stylesheet" href="../visualize_color.css">
-</head>
-<body>
-'''
-        return headerText
     
     def importKindle(self, bookHighlights):
         print("Importing kindle highlights")
@@ -107,13 +100,20 @@ class Bookfile:
         HTMLSimple = self.HTMLSimpHL
         kindleSimple = self.kindleSimpHL
         mergedList = []
+        
+        #Still not sure if I need this. For some reason the NOT Truncated local highlight compares work better with it.
+        #Need to test around it more to figure out exactly what is going on.
+        compareTxtCnt = 50
+        
+        #Since this is in truncated localHL text it needs to be removed before searching for untruncated KindleHL text
+        tncateWarningTxt = "… Some highlights have been hidden or truncated due to export limits."
 
         for localHL in HTMLSimple:
             
             #If a local highlight is completed it doesn't need to be updated from the kindle list in any case. 
             if localHL.truncated == False:
                 for i, kindleHL in enumerate(kindleSimple):
-                    if localHL.text in kindleHL.text:
+                    if localHL.text[:compareTxtCnt] in kindleHL.text[:compareTxtCnt]:
                         #This shrinks the kindle list so I don't have to search through as many highlights to find matches later.
                         kindleSimple.pop(i)
                 mergedList.append(localHL)
@@ -121,7 +121,15 @@ class Bookfile:
             if localHL.truncated == True:
                 #See if there is an untruncated version of the text among the kindle highlights so you can update the truncated local text.
                 for i, kindleHL in enumerate(kindleSimple):
-                    if localHL.text in kindleHL.text:
+                    if localHL.text[:-len(tncateWarningTxt)] in kindleHL.text:
+                        print()
+                        print("TRUNCATED LOCAL FOUND MATCH WITH KINDLE HIGHLIGHT:")
+                        print()
+                        print("Local Highlight Text:")
+                        print(localHL.text)
+                        print()
+                        print("Online highlight Text:")
+                        print(kindleHL.text)
                         #Match located! Now see if it is untruncated
                         if kindleHL.truncated == False:
                             mergedList.append(kindleSimple[i])
