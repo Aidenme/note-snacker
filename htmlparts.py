@@ -8,15 +8,31 @@ HEADER_TEXT = '''
 <body>
 '''
 ENDER_TEXT = '''
-<script>	
+<script>
 	
     function loadScipt(){
-		countHighlights()
+		console.log("Loaded")
+		const highlightList = document.querySelectorAll('.highlight')
+		countHighlights(highlightList)
+		insertHR(highlightList)
 	}
 	
-    function countHighlights(){
-		highlightCount = document.querySelectorAll('.highlight').length;
-		document.getElementById('highlightCount').innerHTML = highlightCount
+    function countHighlights(highlights){
+		document.getElementById('highlightCount').innerHTML = highlights.length
+	}
+
+	function insertHR(highlights){
+		console.log("insertHR ran")
+		console.log(highlights[0].classList[1])
+		for (let i = 0; i < highlights.length; i++) {
+			console.log("Loop ran")
+			if (highlights[i].classList[1] == 'Blue') {
+				highlights[i].insertAdjacentHTML('afterend', '<HR>')
+			} else if (highlights[i].classList[1] == 'Pink' && highlights[i + 1].classList[1] == 'Yellow') {
+				console.log("If passed")
+				highlights[i + 1].insertAdjacentHTML('afterend', '<HR>')
+			}
+		}
 	}
 
 </script>

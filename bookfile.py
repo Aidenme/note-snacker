@@ -11,8 +11,6 @@ class Bookfile:
         self.book = book
         self.fileName = self.getFileName(book)
         self.pathName = config.BOOK_STORAGE_FOLDER + self.fileName
-        self.header = htmlparts.HEADER_TEXT
-        self.ender = self.getEnder()
         self.kindleSimpHL = self.importKindle(book.highlightList)
         self.setBookfile(self.pathName, self.kindleSimpHL)
         self.HTMLSimpHL = self.importHTMLFile(self.pathName)
