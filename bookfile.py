@@ -146,14 +146,14 @@ class Bookfile:
         self.kindleSimpHL = self.importKindle(updatedOnlineBook.highlightList)
 
     def createTitleHTML(self, book):
-        title = "<div id='title' >" + book.title + "</div>\n"
-        author = "<div id='author' >" + book.author + "</div>\n"
+        title = "<div id='title'>" + book.title + "</div>\n"
+        author = "<div id='author'>" + book.author + "</div>\n"
         
         #book is not referenced here because I want the HTML file itself to get the count so I can
         #see if Note Snacker is deleting highlights it shouldn't.
         highlightCountDOM = "<div id='highlightCount'></div>\n"
         
-        titleDiv = "<div id='header>\n" + title + author + highlightCountDOM + "</div>"
+        titleDiv = "<div id='header'>\n" + title + author + highlightCountDOM + "</div>"
 
         return titleDiv
 
