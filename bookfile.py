@@ -11,6 +11,7 @@ class Bookfile:
         self.book = book
         self.fileName = self.getFileName(book)
         self.pathName = config.BOOK_STORAGE_FOLDER + self.fileName
+        self.header = self.createTitleHTML(book)
         self.kindleSimpHL = self.importKindle(book.highlightList)
         self.setBookfile(self.pathName, self.kindleSimpHL)
         self.HTMLSimpHL = self.importHTMLFile(self.pathName)
@@ -35,15 +36,11 @@ class Bookfile:
         self.export(self.pathName, self.localList)
 
     def export(self, pathName, highlightList):
-        mergeHighlights = False
         f = open(pathName , mode='w', encoding='utf-8', errors='replace')
-        f.write(htmlparts.HEADER_TEXT)
+        f.write(htmlparts.PRE_HEADER_HTML)
+        f.write(self.header)
 
         for highlight in highlightList:
-
-            #Toggle "part of a multi-part highlight" on and off
-            if highlight.color == 'Yellow':
-                mergeHighlights = not mergeHighlights
 
             if highlight.truncated:
                 f.write('<div class="highlight ' + highlight.color + ' True">\n')
@@ -63,13 +60,8 @@ class Bookfile:
 
             #Entire highlight div
             f.write('</div>\n')
-
-            if mergeHighlights == False:
-                f.write('<HR>\n')
-            else:
-                pass
         
-        f.write(htmlparts.ENDER_TEXT)
+        f.write(htmlparts.ENDER_HTML)
         f.close()
     
     def importKindle(self, bookHighlights):
@@ -152,6 +144,18 @@ class Bookfile:
 
     def updateKindleList(self, updatedOnlineBook):
         self.kindleSimpHL = self.importKindle(updatedOnlineBook.highlightList)
+
+    def createTitleHTML(self, book):
+        title = "<div id='title' >" + book.title + "</div>\n"
+        author = "<div id='author' >" + book.author + "</div>\n"
+        
+        #book is not referenced here because I want the HTML file itself to get the count so I can
+        #see if Note Snacker is deleting highlights it shouldn't.
+        highlightCountDOM = "<div id='highlightCount'></div>\n"
+        
+        titleDiv = "<div id='header>\n" + title + author + highlightCountDOM + "</div>"
+
+        return titleDiv
 
 
 

@@ -1,4 +1,4 @@
-HEADER_TEXT = '''
+PRE_HEADER_HTML = '''
 <html>
 <head>
     <link rel="stylesheet" href="../visualize_color.css">
@@ -7,7 +7,7 @@ HEADER_TEXT = '''
 <div id="highlightCount"></div>
 <body>
 '''
-ENDER_TEXT = '''
+ENDER_HTML = '''
 <script>
 	
     function loadScipt(){
