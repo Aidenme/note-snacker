@@ -157,6 +157,16 @@ class Bookfile:
 
         return titleDiv
 
+    def removeLocalDuplicates(self):
+        copyIndexList = []
+        for maybe_copy in self.HTMLSimpHL:
+            for i, item in enumerate(self.HTMLSimpHL):
+                if item.text == maybe_copy.text:
+                    copyIndexList.append(i)
+            if len(copyIndexList) > 1:
+                for i, copyIndex in enumerate(copyIndexList):
+                    if i > 0:
+                        self.HTMLSimpHL.pop(copyIndex)
 
 
     #This is just for testing to make sure when I convert a local and kindle highlight they end up with the exact same data.
