@@ -103,7 +103,7 @@ class Bookfile:
             #If a local highlight is completed it doesn't need to be updated from the kindle list in any case. 
             if localHL.truncated == False:
                 for i, kindleHL in enumerate(kindleSimple):
-                    if localHL.text[:compareTxtCnt] in kindleHL.text[:compareTxtCnt]:
+                    if localHL.text in kindleHL.text:
                         #This shrinks the kindle list so I don't have to search through as many highlights to find matches later.
                         kindleSimple.pop(i)
                 mergedList.append(localHL)
@@ -124,8 +124,8 @@ class Bookfile:
                         if kindleHL.truncated == False:
                             mergedList.append(kindleSimple[i])
                         if kindleHL.truncated == True:
-                            kindleSimple.pop(i)
                             mergedList.append(localHL)
+                        kindleSimple.pop(i)
 
         
         #Add any new highlights to the merged list
